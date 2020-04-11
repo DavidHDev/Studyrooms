@@ -1,12 +1,171 @@
-body {
-  background-color: rgb(234, 234, 234) !important;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom right, #2E73DC, #6D4CC3);
+  font-family: 'Poppins' !important;
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom right, #2E73DC, #6D4CC3);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.navbar{
+  display: flex !important;
+  justify-content: space-between;
+  width: 90% !important;
+  padding: 50px;
+}
+
+.ui.grid{
+  padding-top: 100px !important;
+}
+
+a.header{
+  color: #fff !important;
+  font-family: 'Poppins' !important;
+}
+
+.header{
+  color: #fff !important;
+  font-family: 'Poppins' !important;
+}
+
+a.header:hover{
+  color: #7EC25C !important;
+}
+
+.meta{
+  color: #b6b6b6 !important;
+  font-family: 'Poppins' !important;
+}
+
+.description{
+  color: #fff !important;
+}
+
+button.ui.positive.button{
+  background-color: #7EC25C;
+  font-family: 'Poppins' !important;
+  font-weight: 500; 
+}
+
+button.ui.blue.right.floated.button{
+  color: #7EC25C;
+  font-weight: lighter;
+  border: 1px solid #7EC25C;
+  background-color: transparent;
+  font-family: 'Poppins' !important;
+}
+
+button.ui.red.right.floated.button{
+  color: #FF4141;
+  font-weight: lighter;
+  border: 1px solid #FF4141;
+  background-color: transparent;
+  font-family: 'Poppins' !important;
+}
+
+button.ui.blue.basic.button{
+  background-color: #4E5463 !important;
+  font-family: 'Poppins' !important;
+  font-weight: 500 !important;
+  box-shadow: 0px 0px 5px rgba(17, 17, 17, 0.3)!important;
+  background-color: #2E73DC !important;
+  color: #fff !important;
+  transition: all .2s ease;
+}
+
+button.ui.red.basic.button{
+  background-color: #4E5463 !important;
+  font-family: 'Poppins' !important;
+  font-weight: 500 !important;
+  box-shadow: 0px 0px 5px rgba(17, 17, 17, 0.3)!important;
+  background-color: #FF4141 !important;
+  color: #fff !important;
+  transition: all .2s ease;
+}
+
+button.ui.red.basic.button:hover{
+  background-color: #FF4141 !important;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  color: #fff !important;
+  transition: all .2s ease;
+}
+
+button.ui.blue.basic.button:hover{
+  background-color: #2E73DC !important;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+  color: #fff !important;
+  transition: all .2s ease;
+}
+
+.ui.basic.label{
+  background: linear-gradient(to bottom right, #2E73DC, #6D4CC3) !important;
+  color: #fff !important;
 }
 
 .ui.inverted.top.fixed.menu {
-  background-image: linear-gradient(
-    135deg,
-    rgb(24, 42, 115) 0%,
-    rgb(33, 138, 174) 69%,
-    rgb(32, 167, 172) 89%
-  ) !important;
+  background-color: transparent;
+  background: linear-gradient(to right bottom, #1C2127, #4D515B) !important;
+  border-radius: 0px;
+  box-shadow: 0px 0px 20px #222;
+}
+
+.ui.clearing.segment{
+  background-color: #4E5463;
+  box-shadow: 0px 0px 20px rgba(17, 17, 17, 0.15);
+}
+
+.ui.fluid.card{
+  background-color: #4E5463;
+  box-shadow: 0px 0px 20px rgba(17, 17, 17, 0.15);
+}
+
+div#root {
+  background: linear-gradient(to top right, #1C2127, #4D515B) !important;
+  box-sizing: border-box !important;
+  height: inherit !important;
+}
+
+input[type="text"]{
+  background-color: #4D515B !important;
+  color: #f5f5f5 !important;
+}
+
+textarea{
+  background-color: #4D515B !important;
+  color: #f5f5f5 !important;
+}
+
+::placeholder{
+  color: #999 !important;
+}
+
+input[type="datetime-local"]{
+  color: #f5f5f5 !important;
+  background-color: #4D515B !important;
 }

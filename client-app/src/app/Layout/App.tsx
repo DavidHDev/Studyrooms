@@ -75,7 +75,7 @@ const App = () => {
   return (
     <Fragment>
       <Navbar openCreateForm={handleOpenCreateForm}></Navbar>
-      <Container style={{ marginTop: "7em" }}>
+      <Container>
         <AnnouncementDashboard
           announcements={announcements}
           selectAnnouncement={handleSelectAnnouncement}

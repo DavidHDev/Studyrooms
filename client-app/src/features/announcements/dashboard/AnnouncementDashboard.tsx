@@ -44,7 +44,7 @@ export const AnnouncementDashboard: React.FC<IProps> = ({
           target={target}
         />
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column width={6} className="details">
         {selectedAnnouncement && !editMode && (
           <AnnouncementDetails
             announcement={selectedAnnouncement}

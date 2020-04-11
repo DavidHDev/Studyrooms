@@ -9,20 +9,19 @@ interface IProps {
 export const Navbar: React.FC<IProps> = ({openCreateForm}) => {
     return (
         <div>
-    <Menu fixed="top" inverted>
-        <Container>
+    <div>
+        <Container className="navbar">
             <Menu.Item header>
-                <img style={{position: 'relative', top: '-3px', left: '-5px'}} src="/assets/sricon.png" alt="logo"/>
-                StudyRooms
+                <img style={{width: '200px', position: 'relative', top: '-15px', left: '-5px'}} src="/assets/SRWhite.png" alt="logo"/>
             </Menu.Item>
-            <Menu.Item>
+            {/* <Menu.Item className="testing">
                 Announcements
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item>
                 <Button onClick={openCreateForm} positive content='Create Announcement'/>
             </Menu.Item>
         </Container>    
-    </Menu>
+    </div>
         </div>
     )
 }
