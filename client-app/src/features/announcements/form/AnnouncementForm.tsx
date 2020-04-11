@@ -9,13 +9,15 @@ interface IProps {
   announcement: IAnnouncement;
   createAnnouncement: (announcement: IAnnouncement) => void;
   editAnnouncement: (announcement: IAnnouncement) => void;
+  submitting: boolean;
 }
 
 export const AnnouncementForm: React.FC<IProps> = ({
   setEditMode,
   announcement: initialFormState,
   createAnnouncement,
-  editAnnouncement
+  editAnnouncement,
+  submitting
 }) => {
   const initForm = () => {
     if (initialFormState) {
@@ -93,7 +95,7 @@ export const AnnouncementForm: React.FC<IProps> = ({
           onChange={handleInputChange}
           name="room"
         />
-        <Button floated="right" positive type="submit" content="Submit" />
+        <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
         <Button
           onClick={() => setEditMode(false)}
           floated="right"

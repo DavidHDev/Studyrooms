@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Grid } from "semantic-ui-react";
 import { IAnnouncement } from "../../../app/Models/announcement";
 import { AnnouncementList } from "./AnnouncementList";
@@ -14,7 +14,9 @@ interface IProps {
   setSelectedAnnouncement: (announcement: IAnnouncement | null) => void;
   createAnnouncement: (announcement: IAnnouncement) => void;
   editAnnouncement: (announcement: IAnnouncement) => void;
-  deleteAnnouncement: (id: string) => void;
+  deleteAnnouncement: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
+  submitting: boolean;
+  target: string;
 }
 
 export const AnnouncementDashboard: React.FC<IProps> = ({
@@ -26,7 +28,9 @@ export const AnnouncementDashboard: React.FC<IProps> = ({
   setSelectedAnnouncement,
   createAnnouncement,
   editAnnouncement,
-  deleteAnnouncement
+  deleteAnnouncement,
+  submitting,
+  target
 }) => {
   return (
     <Grid>
@@ -36,6 +40,8 @@ export const AnnouncementDashboard: React.FC<IProps> = ({
           selectAnnouncement={selectAnnouncement}
           selectedAnnouncement={selectedAnnouncement}
           deleteAnnouncement={deleteAnnouncement}
+          submitting={submitting}
+          target={target}
         />
       </Grid.Column>
       <Grid.Column width={6}>
@@ -54,6 +60,7 @@ export const AnnouncementDashboard: React.FC<IProps> = ({
             announcement={selectedAnnouncement!}
             createAnnouncement={createAnnouncement}
             editAnnouncement={editAnnouncement}
+            submitting={submitting}
           />
         )}
       </Grid.Column>

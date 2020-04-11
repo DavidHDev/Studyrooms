@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Item, Button, Label, Segment } from "semantic-ui-react";
 import { IAnnouncement } from "../../../app/Models/announcement";
 
@@ -6,13 +6,17 @@ interface IProps {
   announcements: IAnnouncement[];
   selectAnnouncement: (id: string) => void;
   selectedAnnouncement: IAnnouncement | null;
-  deleteAnnouncement: (id: string) => void;
+  deleteAnnouncement: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
+  submitting: boolean;
+  target: string;
 }
 
 export const AnnouncementList: React.FC<IProps> = ({
   announcements,
   selectAnnouncement,
-  deleteAnnouncement
+  deleteAnnouncement,
+  submitting,
+  target
 }) => {
   return (
     <Segment clearing>
@@ -36,7 +40,9 @@ export const AnnouncementList: React.FC<IProps> = ({
                   color="blue"
                 ></Button>
                 <Button
-                  onClick={() => deleteAnnouncement(announcement.id)}
+                  name={announcement.id}
+                  loading={target === announcement.id && submitting}
+                  onClick={(e) => deleteAnnouncement(e, announcement.id)}
                   floated="right"
                   content="Delete"
                   color="red"
