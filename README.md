@@ -15,26 +15,39 @@ Prima versiune -> Baza proiectului este construita cu ASP.NET Core, Entity Frame
 Am folosit Visual Studio Code ca si development environment pentru a avea acces facil la un terminal GIT Bash si NPM avand in vedere ca aplicatia foloseste React.
 
 Pentru a rula aplicatia. Trebuie prima data sa **rulam API-ul** care va porni serverul pe portul `localhost:5000`.
+
 Apoi, intram in folderul **client-app** si pornim serverul de development al aplicatiei React pe portul `localhost:3000`.
 
 **Exista doua optiuni pentru a putea face asta**
+
 1. Putem deschide doua ferestre Command Prompt(cmd) si sa rulam ambele componentele prin CLI.
+
 *Pentru API*
+
 -> `cd Studyrooms/API/`
+
 -> `dotnet watch run`
 
 *Pentru Aplicatia Client*
+
 -> `cd Studyrooms/client-app/`
+
 -> `npm start`
 
 2. Folosind Visual Studio 2019
+
 *Pentru API*
+
 Rulam API-ul din interfata grafica. 
+
 ![Tutorial](/client-app/public/assets/apitut.png)
 
 *Pentru Aplicatia Client*
+
 Putem instala extensia **Whack Whack Terminal** pentru a putea avea un **terminal integrat in VS2019**. Dupa instalare, accesam **View -> Other Windows -> Terminal Window**
+
 Rulam comenzile `cd Studyrooms/client-app/` si apoi `npm start` pentru a porni serverul de development.
+
 *Sau putem din nou sa rulam aplicatia client din Command Prompt folosind comenzile mentionate sus.*
 
 ## Features
