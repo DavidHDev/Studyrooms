@@ -8,8 +8,11 @@ Asadar, avem 5 componente principale care alcatuiesc aplicatia: API, Application
 
 ## Technologies
 ![Logo](/client-app/public/assets/techstack.png)
-Prima versiune -> Baza proiectului este construita cu ASP.NET Core, Entity Framework Core ca si Object Relational Mapper si SQLite pentru baza de date(urmeaza sa schimb pe viitor in MySQL). Aplicatia se foloseste de MVC pentru definirea si crearea de controllere.
-               -> Pentru Front-End(Client Side) am folosit React.js impreuna cu Typescript iar ca si CSS framework am ales Semantic UI React, componentele fiind customizate conform designului pe care l-am creat. 
+Prima versiune
+
+-> Baza proiectului este construita cu ASP.NET Core, Entity Framework Core ca si Object Relational Mapper si SQLite pentru baza de date(urmeaza sa schimb pe viitor in MySQL). Aplicatia se foloseste de MVC pentru definirea si crearea de controllere.
+
+-> Pentru Front-End(Client Side) am folosit React.js impreuna cu Typescript iar ca si CSS framework am ales Semantic UI React, componentele fiind customizate conform designului pe care l-am creat. 
 
 ## Running The Application
 Am folosit Visual Studio Code ca si development environment pentru a avea acces facil la un terminal GIT Bash si NPM avand in vedere ca aplicatia foloseste React.
