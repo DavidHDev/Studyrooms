@@ -47,11 +47,7 @@ Rulam API-ul din interfata grafica.
 
 *Pentru Aplicatia Client*
 
-Putem instala extensia **Whack Whack Terminal** pentru a putea avea un **terminal integrat in VS2019**. Dupa instalare, accesam **View -> Other Windows -> Terminal Window**
-
-Rulam comenzile `cd Studyrooms/client-app/` si apoi `npm start` pentru a porni serverul de development.
-
-*Sau putem din nou sa rulam aplicatia client din Command Prompt folosind comenzile mentionate sus.*
+Rulam comenzile `cd Studyrooms/client-app/` si apoi `npm start` in CMD pentru a porni serverul de development.
 
 ## Features
 1.0 - Deocamdata am implementat doar logica, arhitectura de baza a aplicatiei (un "walking-skeleton") si functionalitatile CRUD pentru Front-End si Back-End dar si putina stilizare de baza.
