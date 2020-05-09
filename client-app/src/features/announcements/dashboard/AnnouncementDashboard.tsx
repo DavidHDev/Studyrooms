@@ -1,69 +1,32 @@
-import React, { SyntheticEvent } from "react";
-import { Grid } from "semantic-ui-react";
-import { IAnnouncement } from "../../../app/Models/announcement";
-import { AnnouncementList } from "./AnnouncementList";
-import { AnnouncementDetails } from "../details/AnnouncementDetails";
-import { AnnouncementForm } from "../form/AnnouncementForm";
+import React, { useContext } from 'react';
+import { Grid } from 'semantic-ui-react';
+import AnnouncementList from './AnnouncementList';
+import AnnouncementDetails from '../details/AnnouncementDetails';
+import AnnouncementForm from '../form/AnnouncementForm';
+import { observer } from 'mobx-react-lite';
+import AnnouncementStore from '../../../app/stores/announcementStore';
 
-interface IProps {
-  announcements: IAnnouncement[];
-  selectAnnouncement: (id: string) => void;
-  selectedAnnouncement: IAnnouncement | null;
-  editMode: boolean;
-  setEditMode: (editMode: boolean) => void;
-  setSelectedAnnouncement: (announcement: IAnnouncement | null) => void;
-  createAnnouncement: (announcement: IAnnouncement) => void;
-  editAnnouncement: (announcement: IAnnouncement) => void;
-  deleteAnnouncement: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
-  submitting: boolean;
-  target: string;
-}
-
-export const AnnouncementDashboard: React.FC<IProps> = ({
-  announcements,
-  selectAnnouncement,
-  selectedAnnouncement,
-  editMode,
-  setEditMode,
-  setSelectedAnnouncement,
-  createAnnouncement,
-  editAnnouncement,
-  deleteAnnouncement,
-  submitting,
-  target
-}) => {
+const AnnouncementDashboard: React.FC = () => {
+  const announcementStore = useContext(AnnouncementStore);
+  const {editMode, selectedAnnouncement} = announcementStore;
   return (
     <Grid>
       <Grid.Column width={10}>
-        <AnnouncementList
-          announcements={announcements}
-          selectAnnouncement={selectAnnouncement}
-          selectedAnnouncement={selectedAnnouncement}
-          deleteAnnouncement={deleteAnnouncement}
-          submitting={submitting}
-          target={target}
-        />
+        <AnnouncementList />
       </Grid.Column>
-      <Grid.Column width={6} className="details">
+      <Grid.Column width={6}>
         {selectedAnnouncement && !editMode && (
-          <AnnouncementDetails
-            announcement={selectedAnnouncement}
-            setEditMode={setEditMode}
-            setSelectedAnnouncement={setSelectedAnnouncement}
-          />
+          <AnnouncementDetails />
         )}
-
         {editMode && (
           <AnnouncementForm
-            key={selectedAnnouncement && selectedAnnouncement.id || 0}
-            setEditMode={setEditMode}
+            key={(selectedAnnouncement && selectedAnnouncement.id) || 0}
             announcement={selectedAnnouncement!}
-            createAnnouncement={createAnnouncement}
-            editAnnouncement={editAnnouncement}
-            submitting={submitting}
           />
         )}
       </Grid.Column>
     </Grid>
   );
 };
+
+export default observer(AnnouncementDashboard);

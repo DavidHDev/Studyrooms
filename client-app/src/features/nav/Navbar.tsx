@@ -1,27 +1,28 @@
-import React from 'react'
-import { Menu, Container, Button } from 'semantic-ui-react'
+import React, { useContext } from "react";
+import { Menu, Container, Button } from "semantic-ui-react";
+import AnnouncementStore from "../../app/stores/announcementStore";
+import { observer } from "mobx-react-lite";
 
-interface IProps {
-    openCreateForm: () => void;
-}
+const NavBar: React.FC = () => {
+  const announcementStore = useContext(AnnouncementStore);
+  return (
+    <Menu fixed="top" inverted>
+      <Container>
+        <Menu.Item header>
+          <img src="/assets/SRWhite.png" alt="logo" style={{ marginRight: 10 }} />
+          Reactivities
+        </Menu.Item>
+        <Menu.Item name="Announcements" />
+        <Menu.Item>
+          <Button
+            onClick={announcementStore.openCreateForm}
+            positive
+            content="Create Announcement"
+          />
+        </Menu.Item>
+      </Container>
+    </Menu>
+  );
+};
 
-
-export const Navbar: React.FC<IProps> = ({openCreateForm}) => {
-    return (
-        <div>
-    <div>
-        <Container className="navbar">
-            <Menu.Item header>
-                <img style={{width: '200px', position: 'relative', top: '-15px', left: '-5px'}} src="/assets/SRWhite.png" alt="logo"/>
-            </Menu.Item>
-            {/* <Menu.Item className="testing">
-                Announcements
-            </Menu.Item> */}
-            <Menu.Item>
-                <Button onClick={openCreateForm} positive content='Create Announcement'/>
-            </Menu.Item>
-        </Container>    
-    </div>
-        </div>
-    )
-}
+export default observer(NavBar);

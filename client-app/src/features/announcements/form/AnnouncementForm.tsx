@@ -1,56 +1,52 @@
-import React, { FormEvent } from "react";
-import { Segment, Form, Button } from "semantic-ui-react";
-import { IAnnouncement } from "../../../app/Models/announcement";
-import { useState } from "react";
-import { v4 as uuid } from 'uuid';
+import React, { useState, FormEvent, useContext } from 'react';
+import { Segment, Form, Button } from 'semantic-ui-react';
+import { IAnnouncement } from '../../../app/Models/announcement';
+import {v4 as uuid} from 'uuid';
+import AnnouncementStore from '../../../app/stores/announcementStore';
+import { observer } from 'mobx-react-lite';
 
 interface IProps {
-  setEditMode: (editMode: boolean) => void;
   announcement: IAnnouncement;
-  createAnnouncement: (announcement: IAnnouncement) => void;
-  editAnnouncement: (announcement: IAnnouncement) => void;
-  submitting: boolean;
 }
 
-export const AnnouncementForm: React.FC<IProps> = ({
-  setEditMode,
+const AnnouncementForm: React.FC<IProps> = ({
   announcement: initialFormState,
-  createAnnouncement,
-  editAnnouncement,
-  submitting
 }) => {
-  const initForm = () => {
+  const announcementStore = useContext(AnnouncementStore);
+  const {createAnnouncement, editAnnouncement, submitting, cancelFormOpen} = announcementStore;
+  const initializeForm = () => {
     if (initialFormState) {
       return initialFormState;
     } else {
       return {
-        id: "",
-        title: "",
-        category: "",
-        description: "",
-        date: "",
-        location: "",
-        room: "",
+        id: '',
+        title: '',
+        category: '',
+        description: '',
+        date: '',
+        location: '',
+        room: ''
       };
     }
   };
 
-  const [announcement, setAnnouncement] = useState<IAnnouncement>(initForm);
+  const [announcement, setAnnouncement] = useState<IAnnouncement>(initializeForm);
 
   const handleSubmit = () => {
-      if (announcement.id.length === 0){
-        let newAnnouncement = {
-          ...announcement,
-          id: uuid()
-        }
-        createAnnouncement(newAnnouncement);
-      }
-      else {
-        editAnnouncement(announcement);
-      }
-  }
+    if (announcement.id.length === 0) {
+      let newAnnouncement = {
+        ...announcement,
+        id: uuid()
+      };
+      createAnnouncement(newAnnouncement);
+    } else {
+      editAnnouncement(announcement);
+    }
+  };
 
-  const handleInputChange = (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = event.currentTarget;
     setAnnouncement({ ...announcement, [name]: value });
   };
@@ -60,49 +56,52 @@ export const AnnouncementForm: React.FC<IProps> = ({
       <Form onSubmit={handleSubmit}>
         <Form.Input
           onChange={handleInputChange}
-          name="title"
-          placeholder="Title"
+          name='title'
+          placeholder='Title'
           value={announcement.title}
         />
         <Form.TextArea
-          placeholder="Description"
+          onChange={handleInputChange}
+          name='description'
+          rows={2}
+          placeholder='Description'
           value={announcement.description}
-          onChange={handleInputChange}
-          name="description"
         />
         <Form.Input
-          placeholder="Category"
+          onChange={handleInputChange}
+          name='category'
+          placeholder='Category'
           value={announcement.category}
-          onChange={handleInputChange}
-          name="category"
         />
         <Form.Input
-          type="datetime-local"
-          placeholder="Date"
+          onChange={handleInputChange}
+          name='date'
+          type='datetime-local'
+          placeholder='Date'
           value={announcement.date}
-          onChange={handleInputChange}
-          name="date"
         />
         <Form.Input
-          placeholder="Location"
+          onChange={handleInputChange}
+          name='city'
+          placeholder='City'
           value={announcement.location}
-          onChange={handleInputChange}
-          name="location"
         />
         <Form.Input
-          placeholder="Room"
-          value={announcement.room}
           onChange={handleInputChange}
-          name="room"
+          name='venue'
+          placeholder='Venue'
+          value={announcement.room}
         />
-        <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
+        <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
         <Button
-          onClick={() => setEditMode(false)}
-          floated="right"
-          type="button"
-          content="Cancel"
+          onClick={cancelFormOpen}
+          floated='right'
+          type='button'
+          content='Cancel'
         />
       </Form>
     </Segment>
   );
 };
+
+export default observer(AnnouncementForm);

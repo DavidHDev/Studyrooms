@@ -1,30 +1,19 @@
-import React, { SyntheticEvent } from "react";
-import { Item, Button, Label, Segment } from "semantic-ui-react";
-import { IAnnouncement } from "../../../app/Models/announcement";
+import React, { useContext } from 'react';
+import { Item, Button, Label, Segment } from 'semantic-ui-react';
+import { observer } from 'mobx-react-lite';
+import AnnouncementStore from '../../../app/stores/announcementStore';
 
-interface IProps {
-  announcements: IAnnouncement[];
-  selectAnnouncement: (id: string) => void;
-  selectedAnnouncement: IAnnouncement | null;
-  deleteAnnouncement: (event: SyntheticEvent<HTMLButtonElement>, id: string) => void;
-  submitting: boolean;
-  target: string;
-}
 
-export const AnnouncementList: React.FC<IProps> = ({
-  announcements,
-  selectAnnouncement,
-  deleteAnnouncement,
-  submitting,
-  target
-}) => {
+const AnnouncementList: React.FC = () => {
+  const announcementStore = useContext(AnnouncementStore);
+  const {announcementsByDate, selectAnnouncement, deleteAnnouncement, submitting, target} = announcementStore;
   return (
     <Segment clearing>
       <Item.Group divided>
-        {announcements.map((announcement) => (
+        {announcementsByDate.map(announcement => (
           <Item key={announcement.id}>
             <Item.Content>
-              <Item.Header as="a">{announcement.title}</Item.Header>
+              <Item.Header as='a'>{announcement.title}</Item.Header>
               <Item.Meta>{announcement.date}</Item.Meta>
               <Item.Description>
                 <div>{announcement.description}</div>
@@ -35,19 +24,19 @@ export const AnnouncementList: React.FC<IProps> = ({
               <Item.Extra>
                 <Button
                   onClick={() => selectAnnouncement(announcement.id)}
-                  floated="right"
-                  content="View"
-                  color="blue"
-                ></Button>
+                  floated='right'
+                  content='View'
+                  color='blue'
+                />
                 <Button
                   name={announcement.id}
                   loading={target === announcement.id && submitting}
                   onClick={(e) => deleteAnnouncement(e, announcement.id)}
-                  floated="right"
-                  content="Delete"
-                  color="red"
-                ></Button>
-                <Label basic content={announcement.category}></Label>
+                  floated='right'
+                  content='Delete'
+                  color='red'
+                />
+                <Label basic content={announcement.category} />
               </Item.Extra>
             </Item.Content>
           </Item>
@@ -56,3 +45,5 @@ export const AnnouncementList: React.FC<IProps> = ({
     </Segment>
   );
 };
+
+export default observer(AnnouncementList);

@@ -1,38 +1,38 @@
-import React from "react";
-import { Card, Button } from "semantic-ui-react";
-import { IAnnouncement } from "../../../app/Models/announcement";
+import React, { useContext } from 'react';
+import { Card, Button } from 'semantic-ui-react';
+import AnnouncementStore from '../../../app/stores/announcementStore';
+import { observer } from 'mobx-react-lite';
 
-interface IProps {
-  announcement: IAnnouncement;
-  setEditMode: (editMode: boolean) => void;
-  setSelectedAnnouncement: (announcement: IAnnouncement | null) => void;
-}
-
-export const AnnouncementDetails: React.FC<IProps> = ({
-  announcement,
-  setEditMode,
-  setSelectedAnnouncement,
-}) => {
+const AnnouncementDetails: React.FC = () => {
+  const announcementStore = useContext(AnnouncementStore);
+  const { selectedAnnouncement: announcement, openEditForm, cancelSelectedAnnouncement } = announcementStore;
   return (
     <Card fluid>
       <Card.Content>
-        <Card.Header>{announcement.title}</Card.Header>
+        <Card.Header>{announcement!.title}</Card.Header>
         <Card.Meta>
-          <span className="date">{announcement.date}</span>
+          <span>{announcement!.date}</span>
         </Card.Meta>
-        <Card.Description>{announcement.description}</Card.Description>
+        <Card.Description>{announcement!.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths={2}>
           <Button
+            onClick={() => openEditForm(announcement!.id)}
             basic
-            color="blue"
-            content="Edit"
-            onClick={() => setEditMode(true)}
-          ></Button>
-          <Button onClick={() => setSelectedAnnouncement(null)} basic color="red" content="Close"></Button>
+            color='blue'
+            content='Edit'
+          />
+          <Button
+            onClick={cancelSelectedAnnouncement}
+            basic
+            color='grey'
+            content='Cancel'
+          />
         </Button.Group>
       </Card.Content>
     </Card>
   );
 };
+
+export default observer(AnnouncementDetails);
