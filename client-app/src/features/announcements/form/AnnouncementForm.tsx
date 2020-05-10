@@ -1,36 +1,49 @@
-import React, { useState, FormEvent, useContext } from 'react';
+import React, { useState, FormEvent, useContext, useEffect } from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
 import { IAnnouncement } from '../../../app/Models/announcement';
-import {v4 as uuid} from 'uuid';
+import { v4 as uuid } from 'uuid';
 import AnnouncementStore from '../../../app/stores/announcementStore';
 import { observer } from 'mobx-react-lite';
+import { RouteComponentProps } from 'react-router';
 
-interface IProps {
-  announcement: IAnnouncement;
+interface DetailParams {
+  id: string;
 }
 
-const AnnouncementForm: React.FC<IProps> = ({
-  announcement: initialFormState,
+const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
+  match,
+  history
 }) => {
   const announcementStore = useContext(AnnouncementStore);
-  const {createAnnouncement, editAnnouncement, submitting, cancelFormOpen} = announcementStore;
-  const initializeForm = () => {
-    if (initialFormState) {
-      return initialFormState;
-    } else {
-      return {
-        id: '',
-        title: '',
-        category: '',
-        description: '',
-        date: '',
-        location: '',
-        room: ''
-      };
-    }
-  };
+  const {
+    createAnnouncement,
+    editAnnouncement,
+    submitting,
+    announcement: initialFormState,
+    loadAnnouncement,
+    clearAnnouncement
+  } = announcementStore;
 
-  const [announcement, setAnnouncement] = useState<IAnnouncement>(initializeForm);
+  const [announcement, setAnnouncement] = useState<IAnnouncement>({
+    id: '',
+    title: '',
+    category: '',
+    description: '',
+    date: '',
+    location: '',
+    room: ''
+  });
+
+  useEffect(() => {
+    if (match.params.id && announcement.id.length === 0) {
+      loadAnnouncement(match.params.id).then(
+        () => initialFormState && setAnnouncement(initialFormState)
+      );
+    }
+    return () => {
+      clearAnnouncement()
+    }
+  }, [loadAnnouncement, clearAnnouncement, match.params.id, initialFormState, announcement.id.length]);
 
   const handleSubmit = () => {
     if (announcement.id.length === 0) {
@@ -38,9 +51,9 @@ const AnnouncementForm: React.FC<IProps> = ({
         ...announcement,
         id: uuid()
       };
-      createAnnouncement(newAnnouncement);
+      createAnnouncement(newAnnouncement).then(() => history.push(`/announcements/${newAnnouncement.id}`))
     } else {
-      editAnnouncement(announcement);
+      editAnnouncement(announcement).then(() => history.push(`/announcements/${announcement.id}`));
     }
   };
 
@@ -82,19 +95,25 @@ const AnnouncementForm: React.FC<IProps> = ({
         />
         <Form.Input
           onChange={handleInputChange}
-          name='city'
-          placeholder='City'
+          name='location'
+          placeholder='Location'
           value={announcement.location}
         />
         <Form.Input
           onChange={handleInputChange}
-          name='venue'
-          placeholder='Venue'
+          name='room'
+          placeholder='Room'
           value={announcement.room}
         />
-        <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
         <Button
-          onClick={cancelFormOpen}
+          loading={submitting}
+          floated='right'
+          positive
+          type='submit'
+          content='Submit'
+        />
+        <Button
+          onClick={() => history.push('/announcements')}
           floated='right'
           type='button'
           content='Cancel'

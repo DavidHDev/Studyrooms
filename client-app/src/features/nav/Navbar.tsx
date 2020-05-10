@@ -1,21 +1,25 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
-import AnnouncementStore from "../../app/stores/announcementStore";
 import { observer } from "mobx-react-lite";
+import { NavLink } from "react-router-dom";
 
 const NavBar: React.FC = () => {
-  const announcementStore = useContext(AnnouncementStore);
   return (
     <Menu fixed="top" inverted>
       <Container>
-        <Menu.Item header>
-          <img src="/assets/SRWhite.png" alt="logo" style={{ marginRight: 10 }} />
-          Reactivities
+        <Menu.Item className="logo" header as={NavLink} exact to="/">
+          <img
+            width="200px"
+            src="/assets/SRWhite.png"
+            alt="logo"
+            style={{ marginRight: 10 }}
+          />
         </Menu.Item>
-        <Menu.Item name="Announcements" />
+        <Menu.Item name="Announcements" as={NavLink} to="/announcements" />
         <Menu.Item>
           <Button
-            onClick={announcementStore.openCreateForm}
+            as={NavLink}
+            to="/createAnnouncement"
             positive
             content="Create Announcement"
           />

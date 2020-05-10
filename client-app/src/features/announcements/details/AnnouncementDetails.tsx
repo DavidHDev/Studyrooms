@@ -1,13 +1,39 @@
-import React, { useContext } from 'react';
-import { Card, Button } from 'semantic-ui-react';
+import React, { useContext, useEffect } from 'react';
+import { Card, Image, Button } from 'semantic-ui-react';
 import AnnouncementStore from '../../../app/stores/announcementStore';
 import { observer } from 'mobx-react-lite';
+import { RouteComponentProps } from 'react-router';
+import LoadingComponent from '../../../app/Layout/LoadingComponent';
+import { Link } from 'react-router-dom';
 
-const AnnouncementDetails: React.FC = () => {
+interface DetailParams {
+  id: string;
+}
+
+const AnnouncementDetails: React.FC<RouteComponentProps<DetailParams>> = ({
+  match,
+  history
+}) => {
   const announcementStore = useContext(AnnouncementStore);
-  const { selectedAnnouncement: announcement, openEditForm, cancelSelectedAnnouncement } = announcementStore;
+  const {
+    announcement,
+    loadAnnouncement,
+    loadingInitial
+  } = announcementStore;
+
+  useEffect(() => {
+    loadAnnouncement(match.params.id);
+  }, [loadAnnouncement, match.params.id]);
+
+  if (loadingInitial || !announcement) return <LoadingComponent content='Loading announcement...' />
+
   return (
     <Card fluid>
+      <Image
+        src={`/assets/categoryImages/${announcement!.category}.png`}
+        wrapped
+        ui={false}
+      />
       <Card.Content>
         <Card.Header>{announcement!.title}</Card.Header>
         <Card.Meta>
@@ -18,13 +44,13 @@ const AnnouncementDetails: React.FC = () => {
       <Card.Content extra>
         <Button.Group widths={2}>
           <Button
-            onClick={() => openEditForm(announcement!.id)}
+            as={Link} to={`/manage/${announcement.id}`}
             basic
             color='blue'
             content='Edit'
           />
           <Button
-            onClick={cancelSelectedAnnouncement}
+            onClick={() => history.push('/announcements')}
             basic
             color='grey'
             content='Cancel'

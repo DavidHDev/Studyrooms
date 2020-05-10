@@ -2,11 +2,16 @@ import React, { useContext } from 'react';
 import { Item, Button, Label, Segment } from 'semantic-ui-react';
 import { observer } from 'mobx-react-lite';
 import AnnouncementStore from '../../../app/stores/announcementStore';
-
+import { Link } from 'react-router-dom';
 
 const AnnouncementList: React.FC = () => {
   const announcementStore = useContext(AnnouncementStore);
-  const {announcementsByDate, selectAnnouncement, deleteAnnouncement, submitting, target} = announcementStore;
+  const {
+    announcementsByDate,
+    deleteAnnouncement,
+    submitting,
+    target
+  } = announcementStore;
   return (
     <Segment clearing>
       <Item.Group divided>
@@ -23,7 +28,8 @@ const AnnouncementList: React.FC = () => {
               </Item.Description>
               <Item.Extra>
                 <Button
-                  onClick={() => selectAnnouncement(announcement.id)}
+                  as={Link}
+                  to={`/announcements/${announcement.id}`}
                   floated='right'
                   content='View'
                   color='blue'
@@ -31,7 +37,7 @@ const AnnouncementList: React.FC = () => {
                 <Button
                   name={announcement.id}
                   loading={target === announcement.id && submitting}
-                  onClick={(e) => deleteAnnouncement(e, announcement.id)}
+                  onClick={e => deleteAnnouncement(e, announcement.id)}
                   floated='right'
                   content='Delete'
                   color='red'
