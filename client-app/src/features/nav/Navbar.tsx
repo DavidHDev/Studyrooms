@@ -6,7 +6,8 @@ import { NavLink } from "react-router-dom";
 const NavBar: React.FC = () => {
   return (
     <Menu fixed="top" inverted>
-      <Container>
+      <Container className="navflex">
+        <div>
         <Menu.Item className="logo" header as={NavLink} exact to="/">
           <img
             width="200px"
@@ -16,6 +17,7 @@ const NavBar: React.FC = () => {
           />
         </Menu.Item>
         <Menu.Item name="Announcements" as={NavLink} to="/announcements" />
+        </div>
         <Menu.Item>
           <Button
             as={NavLink}

@@ -22,7 +22,7 @@ const AnnouncementDashboard: React.FC = () => {
         <AnnouncementList />
       </Grid.Column>
       <Grid.Column width={6}>
-        <h2>Announcement filters</h2>
+        <h2 className="filter-title">Announcement filters</h2>
       </Grid.Column>
     </Grid>
   );

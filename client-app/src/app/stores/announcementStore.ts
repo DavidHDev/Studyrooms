@@ -13,9 +13,18 @@ class AnnouncementStore {
   @observable target = '';
 
   @computed get announcementsByDate() {
-    return Array.from(this.announcementRegistry.values()).sort(
+    return this.groupAnnouncementsByDate(Array.from(this.announcementRegistry.values()));
+  }
+
+  groupAnnouncementsByDate(announcements: IAnnouncement[]){
+    const sortedAnnouncements = announcements.sort(
       (a, b) => Date.parse(a.date) - Date.parse(b.date)
-    );
+    )
+    return Object.entries(sortedAnnouncements.reduce((announcements, announcement) => {
+      const date = announcement.date.split('T')[0];
+      announcements[date] = announcements[date] ? [...announcements[date], announcement] : [announcement];
+      return announcements;
+    }, {} as {[key: string]: IAnnouncement[]}));
   }
 
   @action loadAnnouncements = async () => {

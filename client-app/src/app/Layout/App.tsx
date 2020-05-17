@@ -19,7 +19,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         render={() => (
           <Fragment>
             <NavBar />
-            <Container style={{ marginTop: '7em' }}>
+            <Container className="big-container">
               <Route exact path='/announcements' component={AnnouncementDashboard} />
               <Route path='/announcements/:id' component={AnnouncementDetails} />
               <Route

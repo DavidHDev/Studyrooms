@@ -2,7 +2,7 @@
 
 html, body {
   width: 100%;
-  height: 100%;
+  height: 100vh !important;
   margin: 0;
   padding: 0;
   background: linear-gradient(to right bottom, #1C2127, #4D515B);
@@ -15,6 +15,16 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.big-container{
+  background: linear-gradient(to right bottom, #1C2127, #4D515B);
+  width: 100vw !important;
+  padding: 50px 400px;
+}
+
+.create-form{
+  margin-bottom: 100% !important;
 }
 
 .logo img {
@@ -50,15 +60,27 @@ html, body {
   background: #555;
 }
 
+.homelogo{
+  width: 500px !important;
+  height: auto;
+}
+
+.branding{
+  font-weight: bolder !important;
+  font-family: 'Poppins', sans-serif;
+  font-size: 6vw !important;
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 50%;
+  transform: translate(-130%,-50%);
+}
+
 .navbar{
   display: flex !important;
   justify-content: space-between;
   width: 90% !important;
   padding: 50px;
-}
-
-.ui.grid{
-  padding-top: 100px !important;
 }
 
 a.header{
@@ -167,7 +189,7 @@ button.ui.blue.basic.button:hover{
 div#root{
   padding-top: 50px;
   position: relative;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(to right bottom, #1C2127, #4D515B)
 }
 
@@ -200,4 +222,142 @@ input[type="datetime-local"]{
 
 .home-link{
   color: #f5f5f5;
+}
+
+.masthead {
+  position: absolute !important;
+  top: 0 !important;
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(
+          135deg,
+          #1C2127 0%,
+          #4D515B 69%,
+          #4D515B 89%
+  ) !important;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.homebutton{
+  margin-top: 50px !important;
+}
+/*end home page styles*/
+
+.circle-container{
+  width: 50%;
+  height: 100%;
+}
+
+.fill-circle{
+  position: absolute;
+  top: 50%;
+  transform: translatey(-50%);
+  width: 90vw;
+  height: 90vw;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #2E73DC 10%, #6D4CC3 70%) !important;
+}
+
+.stroke-anim{
+  position: absolute;
+  width: 90vw;
+  height: 90vw;
+  border-radius: 50%;
+  top: 50%;
+  transform: translatey(-50%) scale(1.2);
+  border: 10px dashed #fff;
+  animation: rotate-border 60s linear infinite;
+}
+
+.ui.segment{
+  background-color: #4D515B !important;
+  color: #fff !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(122, 122, 122, 0.2) !important;
+}
+
+.ui.basic.segment{
+  background-color: transparent !important;
+}
+
+.ui.tiny.circular.image{
+  filter: invert(100%);
+}
+
+.ui.blue.large.label{
+  background: linear-gradient(to bottom right, #2E73DC 10%, #6D4CC3 70%) !important;
+
+}
+
+.ui.positive.button{
+  background-color: #7EC25C !important;
+}
+
+a.ui.blue.right.floated.button{
+  background: #7EC25C;
+
+}
+
+.chat-header{
+  margin-top: 15px !important;
+  background: linear-gradient(to bottom right, rgb(46, 116, 220), rgb(110, 76, 195)) !important;
+}
+
+.ui.teal.inverted.secondary.top.attached.center.aligned.segment{
+  background: linear-gradient(to bottom right, rgb(46, 116, 220), rgb(110, 76, 195)) !important;
+}
+
+button.ui.teal.button{
+  background-color: #7EC25C;
+}
+
+button.ui.teal.button:hover{
+  background-color: rgb(145, 219, 109);
+}
+
+button.ui.orange.right.floated.button{
+  background: #FF4141;
+}
+
+button.ui.icon.primary.left.labeled.button{
+  background: #2E73DC;
+}
+
+textarea{
+  background-color: rgb(52, 58, 66) !important;
+  height: 100px !important;
+  resize: none !important;
+}
+
+#form-textarea{
+  background-color: transparent !important;
+}
+
+input:focus{
+  outline: none !important;
+  border: 1px solid #6D4CC3 !important;
+}
+
+input[type=datetime-local]{
+  color: #999 !important;
+}
+
+textarea:focus{
+  outline: none !important;
+  border: 1px solid #6D4CC3 !important;
+}
+
+i.teal.icon{
+  color: #6D4CC3 !important;
+}
+
+@keyframes rotate-border{
+  from{
+    transform: translatey(-50%) scale(1.03) rotate(0deg);
+  }
+  to{
+    transform: translatey(-50%) scale(1.03) rotate(360deg);
+  }
 }

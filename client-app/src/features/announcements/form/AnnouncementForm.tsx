@@ -1,5 +1,5 @@
 import React, { useState, FormEvent, useContext, useEffect } from 'react';
-import { Segment, Form, Button } from 'semantic-ui-react';
+import { Segment, Form, Button, Grid } from 'semantic-ui-react';
 import { IAnnouncement } from '../../../app/Models/announcement';
 import { v4 as uuid } from 'uuid';
 import AnnouncementStore from '../../../app/stores/announcementStore';
@@ -65,7 +65,9 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
   };
 
   return (
-    <Segment clearing>
+    <Grid>
+      <Grid.Column width={10}>
+      <Segment className="create-form" clearing>
       <Form onSubmit={handleSubmit}>
         <Form.Input
           onChange={handleInputChange}
@@ -74,6 +76,7 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
           value={announcement.title}
         />
         <Form.TextArea
+          id="form-textarea"
           onChange={handleInputChange}
           name='description'
           rows={2}
@@ -120,6 +123,8 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
         />
       </Form>
     </Segment>
+      </Grid.Column>
+    </Grid>
   );
 };
 
