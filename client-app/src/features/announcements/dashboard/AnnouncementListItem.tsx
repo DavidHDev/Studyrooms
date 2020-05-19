@@ -2,6 +2,7 @@ import React from "react";
 import { Item, Button, Segment, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { IAnnouncement } from "../../../app/Models/announcement";
+import { format } from 'date-fns';
 
 const AnnouncementListItem: React.FC<{ announcement: IAnnouncement }> = ({
   announcement,
@@ -21,7 +22,7 @@ const AnnouncementListItem: React.FC<{ announcement: IAnnouncement }> = ({
         </Item.Group>
       </Segment>
       <Segment>
-        <Icon name="clock" /> {announcement.date}
+        <Icon name="clock" /> {format(announcement.date, 'h:mm a')}
         <Icon name="marker" /> {announcement.location}, {announcement.room}
       </Segment>
       <Segment secondary>Interested Users</Segment>

@@ -1,10 +1,35 @@
-import React, { useState, FormEvent, useContext, useEffect } from 'react';
-import { Segment, Form, Button, Grid } from 'semantic-ui-react';
-import { IAnnouncement } from '../../../app/Models/announcement';
-import { v4 as uuid } from 'uuid';
-import AnnouncementStore from '../../../app/stores/announcementStore';
-import { observer } from 'mobx-react-lite';
-import { RouteComponentProps } from 'react-router';
+import React, { useState, useContext, useEffect } from "react";
+import { Segment, Form, Button, Grid } from "semantic-ui-react";
+import {
+  AnnouncementFormValues
+} from "../../../app/Models/announcement";
+import { v4 as uuid } from "uuid";
+import AnnouncementStore from "../../../app/stores/announcementStore";
+import { observer } from "mobx-react-lite";
+import { RouteComponentProps } from "react-router";
+import { Form as FinalForm, Field } from "react-final-form";
+import TextInput from "../../../app/common/form/TextInput";
+import TextAreaInput from "../../../app/common/form/TextAreaInput";
+import SelectInput from "../../../app/common/form/SelectInput";
+import { category } from "../../../app/common/options/categoryOptions";
+import DateInput from "../../../app/common/form/DateInput";
+import { combineDateAndTime } from "../../../app/common/util/util";
+import { combineValidators, isRequired, composeValidators, hasLengthGreaterThan } from 'revalidate';
+
+
+const validate = combineValidators({
+  title: isRequired({message: 'Announcement title is required'}),
+  category: isRequired('Category'),
+  description: composeValidators(
+    isRequired('Description'),
+    hasLengthGreaterThan(4)({message: 'Description needs to be at least 5 characters'})
+  ),
+  location: isRequired('Location'),
+  room: isRequired('Room'),
+  date: isRequired('Date'),
+  time: isRequired('Time')
+
+})
 
 interface DetailParams {
   id: string;
@@ -12,117 +37,131 @@ interface DetailParams {
 
 const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
   match,
-  history
+  history,
 }) => {
   const announcementStore = useContext(AnnouncementStore);
   const {
     createAnnouncement,
     editAnnouncement,
     submitting,
-    announcement: initialFormState,
     loadAnnouncement,
-    clearAnnouncement
   } = announcementStore;
 
-  const [announcement, setAnnouncement] = useState<IAnnouncement>({
-    id: '',
-    title: '',
-    category: '',
-    description: '',
-    date: '',
-    location: '',
-    room: ''
-  });
+  const [announcement, setAnnouncement] = useState(
+    new AnnouncementFormValues()
+  );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (match.params.id && announcement.id.length === 0) {
-      loadAnnouncement(match.params.id).then(
-        () => initialFormState && setAnnouncement(initialFormState)
-      );
+    if (match.params.id) {
+      setLoading(true);
+      loadAnnouncement(match.params.id)
+        .then((announcement) =>
+          setAnnouncement(new AnnouncementFormValues(announcement))
+        )
+        .finally(() => setLoading(false));
     }
-    return () => {
-      clearAnnouncement()
-    }
-  }, [loadAnnouncement, clearAnnouncement, match.params.id, initialFormState, announcement.id.length]);
+  }, [match.params.id, announcement.id, loadAnnouncement]);
 
-  const handleSubmit = () => {
-    if (announcement.id.length === 0) {
+  const handleFinalFormSubmit = (values: any) => {
+    const dateAndTime = combineDateAndTime(values.date, values.time);
+    const { date, time, ...announcement } = values;
+    announcement.date = dateAndTime;
+    if (!announcement.id) {
       let newAnnouncement = {
         ...announcement,
-        id: uuid()
+        id: uuid(),
       };
-      createAnnouncement(newAnnouncement).then(() => history.push(`/announcements/${newAnnouncement.id}`))
+      createAnnouncement(newAnnouncement);
     } else {
-      editAnnouncement(announcement).then(() => history.push(`/announcements/${announcement.id}`));
+      editAnnouncement(announcement);
     }
-  };
-
-  const handleInputChange = (
-    event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.currentTarget;
-    setAnnouncement({ ...announcement, [name]: value });
   };
 
   return (
     <Grid>
       <Grid.Column width={10}>
-      <Segment className="create-form" clearing>
-      <Form onSubmit={handleSubmit}>
-        <Form.Input
-          onChange={handleInputChange}
-          name='title'
-          placeholder='Title'
-          value={announcement.title}
-        />
-        <Form.TextArea
-          id="form-textarea"
-          onChange={handleInputChange}
-          name='description'
-          rows={2}
-          placeholder='Description'
-          value={announcement.description}
-        />
-        <Form.Input
-          onChange={handleInputChange}
-          name='category'
-          placeholder='Category'
-          value={announcement.category}
-        />
-        <Form.Input
-          onChange={handleInputChange}
-          name='date'
-          type='datetime-local'
-          placeholder='Date'
-          value={announcement.date}
-        />
-        <Form.Input
-          onChange={handleInputChange}
-          name='location'
-          placeholder='Location'
-          value={announcement.location}
-        />
-        <Form.Input
-          onChange={handleInputChange}
-          name='room'
-          placeholder='Room'
-          value={announcement.room}
-        />
-        <Button
-          loading={submitting}
-          floated='right'
-          positive
-          type='submit'
-          content='Submit'
-        />
-        <Button
-          onClick={() => history.push('/announcements')}
-          floated='right'
-          type='button'
-          content='Cancel'
-        />
-      </Form>
-    </Segment>
+        <Segment className="create-form" clearing>
+          <FinalForm
+            validate={validate}
+            initialValues={announcement}
+            onSubmit={handleFinalFormSubmit}
+            render={({ handleSubmit, invalid, pristine }) => (
+              <Form onSubmit={handleSubmit} loading={loading}>
+                <Field
+                  name="title"
+                  placeholder="Title"
+                  value={announcement.title}
+                  component={TextInput}
+                />
+                <Field
+                  id="form-textarea"
+                  name="description"
+                  placeholder="Description"
+                  rows={3}
+                  value={announcement.description}
+                  component={TextAreaInput}
+                />
+                <Field
+                  name="category"
+                  placeholder="Category"
+                  value={announcement.category}
+                  component={SelectInput}
+                  options={category}
+                />
+
+                <Form.Group widths="equal">
+                  <Field
+                    name="date"
+                    date={true}
+                    placeholder="Date"
+                    value={announcement.date}
+                    component={DateInput}
+                  />
+                  <Field
+                    name="time"
+                    time={true}
+                    placeholder="Time"
+                    value={announcement.date}
+                    component={DateInput}
+                  />
+                </Form.Group>
+
+                <Field
+                  name="location"
+                  placeholder="Location"
+                  value={announcement.location}
+                  component={TextInput}
+                />
+                <Field
+                  name="room"
+                  placeholder="Room"
+                  value={announcement.room}
+                  component={TextInput}
+                />
+                <Button
+                  loading={submitting}
+                  disabled={loading || invalid || pristine}
+                  floated="right"
+                  positive
+                  type="submit"
+                  content="Submit"
+                />
+                <Button
+                  onClick={
+                    announcement.id
+                      ? () => history.push(`/announcements/${announcement.id}`)
+                      : () => history.push("/announcements")
+                  }
+                  disabled={loading}
+                  floated="right"
+                  type="button"
+                  content="Cancel"
+                />
+              </Form>
+            )}
+          />
+        </Segment>
       </Grid.Column>
     </Grid>
   );

@@ -2,6 +2,8 @@ import React from 'react'
 import { Segment, Image, Item, Header, Button } from 'semantic-ui-react';
 import { IAnnouncement } from '../../../app/Models/announcement';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 const announcementImageStyle = {
   filter: 'brightness(80%)'
@@ -30,7 +32,7 @@ const AnnouncementDetailedHeader: React.FC<{announcement: IAnnouncement}> = ({an
                           content={announcement.title}
                           style={{ color: 'white' }}
                         />
-                        <p>{announcement.date}</p>
+                        <p>{format(announcement.date, 'eeee do MMMM')}</p>
                         <p>
                           Hosted by <strong>Bob</strong>
                         </p>
@@ -42,7 +44,7 @@ const AnnouncementDetailedHeader: React.FC<{announcement: IAnnouncement}> = ({an
               <Segment clearing attached='bottom'>
                 <Button color='teal'>Attend</Button>
                 <Button>Not Interested</Button>
-                <Button color='orange' floated='right'>
+                <Button as={Link} to={`/manage/${announcement.id}`} color='orange' floated='right'>
                   Edit
                 </Button>
               </Segment>

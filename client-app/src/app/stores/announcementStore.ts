@@ -1,9 +1,11 @@
-import { observable, action, computed, configure, runInAction } from 'mobx';
+import { observable, action, computed, runInAction } from 'mobx';
 import { createContext, SyntheticEvent } from 'react';
 import { IAnnouncement } from '../Models/announcement';
 import agent from '../api/agent';
+import { history } from '../..';
+import { toast } from 'react-toastify';
 
-configure({enforceActions: 'always'});
+// configure({enforceActions: 'always'});
 
 class AnnouncementStore {
   @observable announcementRegistry = new Map();
@@ -13,15 +15,15 @@ class AnnouncementStore {
   @observable target = '';
 
   @computed get announcementsByDate() {
-    return this.groupAnnouncementsByDate(Array.from(this.announcementRegistry.values()));
+    return this.groupAnnouncementsByDate(Array.from(this.announcementRegistry.values()))
   }
 
-  groupAnnouncementsByDate(announcements: IAnnouncement[]){
+  groupAnnouncementsByDate(announcements: IAnnouncement[]) {
     const sortedAnnouncements = announcements.sort(
-      (a, b) => Date.parse(a.date) - Date.parse(b.date)
+      (a, b) => a.date.getTime() - b.date.getTime()
     )
     return Object.entries(sortedAnnouncements.reduce((announcements, announcement) => {
-      const date = announcement.date.split('T')[0];
+      const date = announcement.date.toISOString().split('T')[0];
       announcements[date] = announcements[date] ? [...announcements[date], announcement] : [announcement];
       return announcements;
     }, {} as {[key: string]: IAnnouncement[]}));
@@ -33,12 +35,11 @@ class AnnouncementStore {
       const announcements = await agent.Announcements.list();
       runInAction('loading announcements', () => {
         announcements.forEach(announcement => {
-          announcement.date = announcement.date.split('.')[0];
+          announcement.date = new Date(announcement.date);
           this.announcementRegistry.set(announcement.id, announcement);
         });
         this.loadingInitial = false;
       })
-
     } catch (error) {
       runInAction('load announcements error', () => {
         this.loadingInitial = false;
@@ -50,14 +51,18 @@ class AnnouncementStore {
     let announcement = this.getAnnouncement(id);
     if (announcement) {
       this.announcement = announcement;
+      return announcement;
     } else {
       this.loadingInitial = true;
       try {
         announcement = await agent.Announcements.details(id);
-        runInAction('getting announcement',() => {
+        runInAction('getting announcements',() => {
+          announcement.date = new Date(announcement.date);
           this.announcement = announcement;
+          this.announcementRegistry.set(announcement.id, announcement);
           this.loadingInitial = false;
         })
+        return announcement;
       } catch (error) {
         runInAction('get announcement error', () => {
           this.loadingInitial = false;
@@ -83,11 +88,13 @@ class AnnouncementStore {
         this.announcementRegistry.set(announcement.id, announcement);
         this.submitting = false;
       })
+      history.push(`/announcements/${announcement.id}`)
     } catch (error) {
       runInAction('create announcement error', () => {
         this.submitting = false;
       })
-      console.log(error);
+      toast.error('Problem submitting data');
+      console.log(error.response);
     }
   };
 
@@ -100,10 +107,12 @@ class AnnouncementStore {
         this.announcement = announcement;
         this.submitting = false;
       })
+      history.push(`/announcements/${announcement.id}`)
     } catch (error) {
       runInAction('edit announcement error', () => {
         this.submitting = false;
       })
+      toast.error('Problem submitting data');
       console.log(error);
     }
   };

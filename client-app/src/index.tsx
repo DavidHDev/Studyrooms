@@ -7,7 +7,11 @@ import 'semantic-ui-css/semantic.min.css'
 import App from './app/Layout/App';
 import 'react-toastify/dist/ReactToastify.min.css';
 import * as serviceWorker from './serviceWorker';
+import 'react-widgets/dist/css/react-widgets.css';
 import ScrollToTop from './app/Layout/ScrollToTop';
+import dateFnsLocalizer from 'react-widgets-date-fns';
+
+dateFnsLocalizer();
 
 export const history = createBrowserHistory();
 

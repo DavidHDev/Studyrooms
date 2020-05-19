@@ -1,6 +1,7 @@
 import React from 'react'
 import { Segment, Grid, Icon } from 'semantic-ui-react';
 import { IAnnouncement } from '../../../app/Models/announcement';
+import { format } from 'date-fns';
 
 const AnnouncementDetailedInfo: React.FC<{announcement: IAnnouncement}> = ({announcement}) => {
     return (
@@ -23,7 +24,7 @@ const AnnouncementDetailedInfo: React.FC<{announcement: IAnnouncement}> = ({anno
                       </Grid.Column>
                       <Grid.Column width={15}>
                         <span>
-                          {announcement.date}
+                          {format(announcement.date, 'eeee do MMMM')} at {format(announcement.date, 'h:mm a')}
                         </span>
                       </Grid.Column>
                     </Grid>
