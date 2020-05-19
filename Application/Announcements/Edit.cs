@@ -1,6 +1,9 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -18,6 +21,17 @@ namespace Application.Announcements
                     public string Location { get; set; }
                     public string Room { get; set; }
                 }
+
+                    public class CommandValidator : AbstractValidator<Command>{   
+                        public CommandValidator(){
+                            RuleFor(x => x.Title).NotEmpty();
+                            RuleFor(x => x.Description).NotEmpty();
+                            RuleFor(x => x.Category).NotEmpty();
+                            RuleFor(x => x.Date).NotEmpty();
+                            RuleFor(x => x.Location).NotEmpty();
+                            RuleFor(x => x.Room).NotEmpty();
+                        }
+                    }
                 public class Handler : IRequestHandler<Command>
                 {
                     private readonly DataContext _context;
@@ -32,8 +46,11 @@ namespace Application.Announcements
 
                         var announcement = await _context.Announcements.FindAsync(request.Id);
 
-                        if (announcement == null)
-                            throw new Exception("Could not find announcement.");
+
+                        if(announcement == null)
+                        throw new RestException(HttpStatusCode.NotFound, new {announcement = "Not Found"});
+
+
 
                         announcement.Title = request.Title ?? announcement.Title;
                         announcement.Description = request.Description ?? announcement.Description;

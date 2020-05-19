@@ -14,7 +14,8 @@ interface DetailParams {
 }
 
 const AnnouncementDetails: React.FC<RouteComponentProps<DetailParams>> = ({
-  match
+  match,
+  history
 }) => {
   const announcementStore = useContext(AnnouncementStore);
   const {
@@ -25,9 +26,14 @@ const AnnouncementDetails: React.FC<RouteComponentProps<DetailParams>> = ({
 
   useEffect(() => {
     loadAnnouncement(match.params.id);
-  }, [loadAnnouncement, match.params.id]);
+  }, [loadAnnouncement, match.params.id, history]);
 
-  if (loadingInitial || !announcement) return <LoadingComponent content='Loading announcement...' />
+  if (loadingInitial) return <LoadingComponent content='Loading announcement...' />
+
+  if (!announcement){
+    return <h2>Announcement not found</h2>
+  }
+    
 
   return (
     <Grid>
