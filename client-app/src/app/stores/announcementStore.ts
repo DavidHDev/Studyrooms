@@ -1,13 +1,20 @@
 import { observable, action, computed, runInAction } from 'mobx';
-import { createContext, SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 import { IAnnouncement } from '../Models/announcement';
 import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
+import { RootStore } from './rootStore';
 
 // configure({enforceActions: 'always'});
 
-class AnnouncementStore {
+export default class AnnouncementStore {
+  rootStore: RootStore;
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
+  }
+
+
   @observable announcementRegistry = new Map();
   @observable announcement: IAnnouncement | null = null;
   @observable loadingInitial = false;
@@ -137,4 +144,4 @@ class AnnouncementStore {
   }
 }
 
-export default createContext(new AnnouncementStore());
+// export default createContext(new AnnouncementStore());

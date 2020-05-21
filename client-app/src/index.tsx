@@ -10,6 +10,7 @@ import * as serviceWorker from './serviceWorker';
 import 'react-widgets/dist/css/react-widgets.css';
 import ScrollToTop from './app/Layout/ScrollToTop';
 import dateFnsLocalizer from 'react-widgets-date-fns';
+import 'mobx-react-lite/batchingForReactDom'
 
 dateFnsLocalizer();
 

@@ -2,18 +2,19 @@ import React, { useContext, useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import AnnouncementList from './AnnouncementList';
 import { observer } from 'mobx-react-lite';
-import AnnouncementStore from '../../../app/stores/announcementStore';
 import LoadingComponent from '../../../app/Layout/LoadingComponent';
+import { RootStoreContext } from '../../../app/stores/rootStore';
 
 const AnnouncementDashboard: React.FC = () => {
 
-  const announcementStore = useContext(AnnouncementStore);
+  const rootStore = useContext(RootStoreContext);
+  const {loadAnnouncements, loadingInitial} = rootStore.announcementStore;
 
   useEffect(() => {
-    announcementStore.loadAnnouncements();
-  }, [announcementStore]);
+    loadAnnouncements();
+  }, [loadAnnouncements]);
 
-  if (announcementStore.loadingInitial)
+  if (loadingInitial)
     return <LoadingComponent content='Loading announcements...' />;
 
   return (
