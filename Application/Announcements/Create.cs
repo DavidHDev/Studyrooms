@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Domain;
 using MediatR;
 using Persistence;
+using Application.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Announcements
 {
@@ -36,14 +38,17 @@ namespace Application.Announcements
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _context = context;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var announcement = new Announcement{
+                var announcement = new Announcement
+                {
                     Id = request.Id,
                     Title = request.Title,
                     Description = request.Description,
@@ -52,9 +57,22 @@ namespace Application.Announcements
                     Location = request.Location,
                     Room = request.Room
                 };
-                
+
                 _context.Announcements.Add(announcement);
-                var success = await _context.SaveChangesAsync() > 0; 
+
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == 
+                _userAccessor.GetCurrentUsername());
+
+                var atendee = new UserAnnouncement
+                {
+                    AppUser = user,
+                    Announcement = announcement,
+                    IsHost = true,
+                    DateJoined = DateTime.Now
+                };
+
+                _context.UserAnnouncements.Add(atendee);
+                var success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;
 
