@@ -11,7 +11,11 @@ namespace Persistence
         }
         public DbSet<Value> Values { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
-        public DbSet<UserAnnouncement> UserAnnouncements { get; set;}        protected override void OnModelCreating(ModelBuilder builder){
+        public DbSet<UserAnnouncement> UserAnnouncements { get; set;}
+
+        public DbSet<Photo> Photos { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder builder){
 
             base.OnModelCreating(builder);
 
