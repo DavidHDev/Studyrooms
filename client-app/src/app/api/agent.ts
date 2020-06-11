@@ -49,7 +49,9 @@ const Announcements = {
     details: (id: string) => requests.get(`/announcements/${id}`),
     create: (announcement: IAnnouncement) => requests.post('/announcements', announcement),
     update: (announcement: IAnnouncement) => requests.put(`/announcements/${announcement.id}`, announcement),
-    delete: (id: string) => requests.del(`/announcements/${id}`)
+    delete: (id: string) => requests.del(`/announcements/${id}`),
+    attend: (id: string) => requests.post(`/announcements/${id}/attend`, {}),
+    unattend: (id: string) => requests.del(`/announcements/${id}/attend`)
 }
 
 const User = {

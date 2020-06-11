@@ -5,6 +5,7 @@ import agent from '../api/agent';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { RootStore } from './rootStore';
+import { setAnnouncementProps, createAttendee } from '../common/util/util';
 
 // configure({enforceActions: 'always'});
 
@@ -20,6 +21,8 @@ export default class AnnouncementStore {
   @observable loadingInitial = false;
   @observable submitting = false;
   @observable target = '';
+  @observable loading = false;
+
 
   @computed get announcementsByDate() {
     return this.groupAnnouncementsByDate(Array.from(this.announcementRegistry.values()))
@@ -42,7 +45,7 @@ export default class AnnouncementStore {
       const announcements = await agent.Announcements.list();
       runInAction('loading announcements', () => {
         announcements.forEach(announcement => {
-          announcement.date = new Date(announcement.date);
+          setAnnouncementProps(announcement, this.rootStore.userStore.user!)
           this.announcementRegistry.set(announcement.id, announcement);
         });
         this.loadingInitial = false;
@@ -64,7 +67,7 @@ export default class AnnouncementStore {
       try {
         announcement = await agent.Announcements.details(id);
         runInAction('getting announcements',() => {
-          announcement.date = new Date(announcement.date);
+          setAnnouncementProps(announcement, this.rootStore.userStore.user!)
           this.announcement = announcement;
           this.announcementRegistry.set(announcement.id, announcement);
           this.loadingInitial = false;
@@ -91,7 +94,14 @@ export default class AnnouncementStore {
     this.submitting = true;
     try {
       await agent.Announcements.create(announcement);
+      const attendee = createAttendee(this.rootStore.userStore.user!);
+      attendee.isHost = true;
+      let attendees = [];
+      attendees.push(attendee);
+      announcement.attendees = attendees;
+      announcement.isHost = true;
       runInAction('create announcement', () => {
+
         this.announcementRegistry.set(announcement.id, announcement);
         this.submitting = false;
       })
@@ -142,6 +152,51 @@ export default class AnnouncementStore {
       console.log(error);
     }
   }
+  
+
+  @action attendAnnouncement = async () => {
+    const attendee = createAttendee(this.rootStore.userStore.user!);
+    this.loading = true;
+    try {
+      await agent.Announcements.attend(this.announcement!.id);
+      runInAction(() => {
+        if (this.announcement) {
+          this.announcement.attendees.push(attendee);
+          this.announcement.isGoing = true;
+          this.announcementRegistry.set(this.announcement.id, this.announcement);
+          this.loading = false;
+        }
+      })
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      })
+      toast.error('Problem signing up to announcement');
+    }
+  };
+
+  @action cancelAttendance = async () => {
+    this.loading = true;
+    try {
+      await agent.Announcements.unattend(this.announcement!.id);
+      runInAction(() => {
+        if (this.announcement) {
+          this.announcement.attendees = this.announcement.attendees.filter(
+            a => a.username !== this.rootStore.userStore.user!.username
+          );
+          this.announcement.isGoing = false;
+          this.announcementRegistry.set(this.announcement.id, this.announcement);
+          this.loading = false;
+        }
+      })
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+      })
+      toast.error('Problem cancelling attendance');
+    }
+  };
 }
+
 
 // export default createContext(new AnnouncementStore());

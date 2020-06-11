@@ -1,22 +1,27 @@
 import React from "react";
-import { Item, Button, Segment, Icon } from "semantic-ui-react";
+import { Item, Button, Segment, Icon, Label} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { IAnnouncement } from "../../../app/Models/announcement";
 import { format } from 'date-fns';
+import AnnouncementListItemAttendees from "./AnnouncementListItemAttendees";
 
 const AnnouncementListItem: React.FC<{ announcement: IAnnouncement }> = ({
   announcement,
 }) => {
-
+  const host = announcement.attendees.filter(x => x.isHost)[0];
   return (
     <Segment.Group>
       <Segment>
         <Item.Group>
         <Item>
-          <Item.Image size="tiny" circular src="/assets/user.png"></Item.Image>
+          <Item.Image size="tiny" circular src={host.image || '/assets/user.png'}></Item.Image>
           <Item.Content>
-            <Item.Header as="a">{announcement.title}</Item.Header>
-            <Item.Description>Created by User</Item.Description>
+            <Item.Header as={Link} to={`/announcements/${announcement.id}`}>{announcement.title}</Item.Header>
+            <Item.Description>Created by {host.displayName}</Item.Description>
+            {announcement.isHost &&
+            <Item.Description><Label basic color='orange' content="You are hosting this."/></Item.Description> }
+            {announcement.isGoing && !announcement.isHost &&
+            <Item.Description><Label basic color='green' content="You are interested in this."/></Item.Description> }
           </Item.Content>
         </Item>
         </Item.Group>
@@ -25,7 +30,7 @@ const AnnouncementListItem: React.FC<{ announcement: IAnnouncement }> = ({
         <Icon name="clock" /> {format(announcement.date, 'h:mm a')}
         <Icon name="marker" /> {announcement.location}, {announcement.room}
       </Segment>
-      <Segment secondary>Interested Users</Segment>
+      <Segment secondary><AnnouncementListItemAttendees attendees={announcement.attendees}/></Segment>
       <Segment clearing>
         <span>{announcement.description}</span>
         <Button

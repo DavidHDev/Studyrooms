@@ -6,6 +6,9 @@ export interface IAnnouncement {
     date: Date;
     location: string;
     room: string;
+    isGoing: boolean;
+    isHost: boolean;
+    attendees: IAttendee[];
 }
 
 export interface IAnnouncementFormValues extends Partial<IAnnouncement> {
@@ -28,4 +31,11 @@ export class AnnouncementFormValues implements IAnnouncementFormValues {
         }
         Object.assign(this, init);
     }
+}
+
+export interface IAttendee {
+    username: string;
+    displayName: string;
+    image: string;
+    isHost: boolean;
 }

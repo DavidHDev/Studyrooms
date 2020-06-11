@@ -43,7 +43,7 @@ const AnnouncementDetails: React.FC<RouteComponentProps<DetailParams>> = ({
         <AnnouncementDetailedChat />
       </Grid.Column>
       <Grid.Column width={6}>
-        <AnnouncementDetailedSidebar />
+        <AnnouncementDetailedSidebar attendees={announcement.attendees} />
       </Grid.Column>
     </Grid>
   );
