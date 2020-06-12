@@ -6,7 +6,7 @@ import ProfileDescription from './ProfileDescription';
 const panes = [
     {menuItem: 'About', render: () => <ProfileDescription />},
     {menuItem: 'Photos', render: () => <ProfilePhotos />},
-    {menuItem: 'Activities', render: () => <Tab.Pane>Activities content</Tab.Pane>},
+    {menuItem: 'Announcements', render: () => <Tab.Pane>All Announcements</Tab.Pane>},
     {menuItem: 'Followers', render: () => <Tab.Pane>Followers content</Tab.Pane>},
     {menuItem: 'Following', render: () => <Tab.Pane>Following content</Tab.Pane>},
 ]
