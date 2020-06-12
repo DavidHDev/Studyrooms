@@ -282,9 +282,7 @@ input[type="datetime-local"]{
   background-color: transparent !important;
 }
 
-.ui.tiny.circular.image{
-  filter: invert(100%);
-}
+
 
 .ui.blue.large.label{
   background: linear-gradient(to bottom right, #2E73DC 10%, #6D4CC3 70%) !important;

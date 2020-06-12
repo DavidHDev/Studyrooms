@@ -1,6 +1,5 @@
 import { IAnnouncement, IAttendee } from "../../Models/announcement";
 import { IUser } from "../../Models/user";
-import UserStore from "../../stores/userStore";
 
 export const combineDateAndTime = (date: Date, time: Date) => {
     const timeString = time.getHours() + ':' + time.getMinutes() + ':00';

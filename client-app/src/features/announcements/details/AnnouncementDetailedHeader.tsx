@@ -24,6 +24,7 @@ const AnnouncementDetailedHeader: React.FC<{ announcement: IAnnouncement }> = ({
 }) => {
   const rootStore = useContext(RootStoreContext);
   const { attendAnnouncement, cancelAttendance, loading } = rootStore.announcementStore;
+  const host = announcement.attendees.filter((x) => x.isHost)[0];
   return (
     <Segment.Group>
       <Segment
@@ -48,7 +49,7 @@ const AnnouncementDetailedHeader: React.FC<{ announcement: IAnnouncement }> = ({
                 />
                 <p>{format(announcement.date, "eeee do MMMM")}</p>
                 <p>
-                  Hosted by <strong>Bob</strong>
+  Hosted by <Link to={`/profile/${host.username}`}> <strong>{host.displayName}</strong></Link>
                 </p>
               </Item.Content>
             </Item>
