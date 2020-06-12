@@ -57,7 +57,7 @@ namespace Infrastructure.Photos
 
             var result = _cloudinary.Destroy(deleteParams);
 
-            return result.Result ==  "ok" ? result.Result : null;
+            return result.Result == "ok" ? result.Result : null;
         }
     }
 }

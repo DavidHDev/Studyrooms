@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { Grid } from 'semantic-ui-react';
 import ProfileHeader from './ProfileHeader';
 import ProfileContent from './ProfileContent';
+import { RouteComponentProps } from 'react-router';
 import { RootStoreContext } from '../../app/stores/rootStore';
-import { RouteComponentProps } from 'react-router-dom';
 import LoadingComponent from '../../app/Layout/LoadingComponent';
 import { observer } from 'mobx-react-lite';
 
@@ -15,13 +15,13 @@ interface IProps extends RouteComponentProps<RouteParams> {}
 
 const ProfilePage: React.FC<IProps> = ({match}) => {
     const rootStore = useContext(RootStoreContext);
-    const { loadingProfile, profile, loadProfile } = rootStore.profileStore;
+    const {loadingProfile, profile, loadProfile} = rootStore.profileStore;
 
     useEffect(() => {
-        loadProfile(match.params.username)
+        loadProfile(match.params.username);
     }, [loadProfile, match])
 
-    if (loadingProfile) return <LoadingComponent content="Loading profile..." />
+    if (loadingProfile) return <LoadingComponent content='Loading profile...' />
 
     return (
         <Grid>
@@ -32,6 +32,5 @@ const ProfilePage: React.FC<IProps> = ({match}) => {
         </Grid>
     )
 }
-
 
 export default observer(ProfilePage);
