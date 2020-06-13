@@ -9,6 +9,17 @@ export interface IAnnouncement {
     isGoing: boolean;
     isHost: boolean;
     attendees: IAttendee[];
+    comments: IComment [];
+}
+
+
+export interface IComment {
+    id: string;
+    createdAt: Date;
+    body: string;
+    username: string;
+    displayName: string;
+    image: string;
 }
 
 export interface IAnnouncementFormValues extends Partial<IAnnouncement> {

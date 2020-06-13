@@ -14,5 +14,6 @@ namespace Domain
         public string Room { get; set; }
 
         public virtual ICollection<UserAnnouncement> UserAnnouncements { get; set; }
+        public virtual ICollection<Comment> Comments {get; set;}
     }
 }
