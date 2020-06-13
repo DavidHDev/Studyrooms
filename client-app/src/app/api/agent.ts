@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { IAnnouncement } from '../Models/announcement';
+import { IAnnouncement, IAnnouncementsEnvelope } from '../Models/announcement';
 import { history } from '../..';
 import { toast } from 'react-toastify';
 import { IUser, IUserFormValues } from '../Models/user';
@@ -53,7 +53,7 @@ const requests = {
 }
 
 const Announcements = {
-    list: (): Promise<IAnnouncement[]> => requests.get('/announcements'),
+    list: (params: URLSearchParams): Promise<IAnnouncementsEnvelope> => axios.get('/announcements', {params: params}).then(sleep(1000)).then(responseBody),
     details: (id: string) => requests.get(`/announcements/${id}`),
     create: (announcement: IAnnouncement) => requests.post('/announcements', announcement),
     update: (announcement: IAnnouncement) => requests.put(`/announcements/${announcement.id}`, announcement),
@@ -76,7 +76,9 @@ const Profiles = {
     updateProfile: (profile: Partial<IProfile>) => requests.put(`/profiles`, profile),
     follow: (username: string) => requests.post(`/profiles/${username}/follow`, {}),
     unfollow: (username: string) => requests.del(`/profiles/${username}/follow`),
-    listFollowings: (username: string, predicate: string) => requests.get(`/profiles/${username}/follow?predicate=${predicate}`)
+    listFollowings: (username: string, predicate: string) => requests.get(`/profiles/${username}/follow?predicate=${predicate}`),
+    listAnnouncements: (username: string, predicate: string) =>
+    requests.get(`/profiles/${username}/announcements?predicate=${predicate}`)
 }
 
 export default {

@@ -1,3 +1,8 @@
+export interface IAnnouncementsEnvelope {
+    announcements: IAnnouncement[];
+    announcementCount: number;
+}
+
 export interface IAnnouncement {
     id: string;
     title: string;

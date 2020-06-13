@@ -7,7 +7,7 @@ import TextAreaInput from '../../../app/common/form/TextAreaInput';
 import { observer } from 'mobx-react-lite';
 import {formatDistance} from 'date-fns';
 
-const ActivityDetailedChat = () => {
+const AnnouncementDetailedChat = () => {
   const rootStore = useContext(RootStoreContext);
   const {
     createHubConnection,
@@ -76,4 +76,4 @@ const ActivityDetailedChat = () => {
   );
 };
 
-export default observer(ActivityDetailedChat);
+export default observer(AnnouncementDetailedChat);
