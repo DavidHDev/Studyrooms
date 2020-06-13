@@ -39,7 +39,7 @@ namespace API.SignalR
 
             var username = GetUsername();
 
-            await Clients.Group(groupName).SendAsync("Send", $"{username} has joined the group");
+            await Clients.Group(groupName).SendAsync("Send", $"{username} is viewing this announcement.");
         }
 
         public async Task RemoveFromGroup(string groupName)
@@ -48,7 +48,7 @@ namespace API.SignalR
 
             var username = GetUsername();
 
-            await Clients.Group(groupName).SendAsync("Send", $"{username} has left the group");
+            await Clients.Group(groupName).SendAsync("Send", $"{username} has left the page.");
         }
     }
 }
