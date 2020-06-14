@@ -25,26 +25,25 @@ const AnnouncementDetailedChat = () => {
 
   return (
     <Fragment>
-      <Segment
+      <Segment className="chat-header"
         textAlign='center'
         attached='top'
         inverted
-        color='teal'
         style={{ border: 'none' }}
       >
-        <Header>Chat about this event</Header>
+        <Header>Announcement Discussion</Header>
       </Segment>
       <Segment attached>
         <Comment.Group>
           {announcement && announcement.comments && announcement.comments.map((comment) => (
-          <Comment key={comment.id}>
-          <Comment.Avatar src={comment.image || '/assets/user.png'} />
-          <Comment.Content>
-            <Comment.Author as={Link} to={`/profile/${comment.username}`}>{comment.displayName}</Comment.Author>
-            <Comment.Metadata>
+          <Comment className="comment" key={comment.id}>
+          <Comment.Avatar src={comment.image || '/assets/user.svg'} />
+          <Comment.Content className="comment-content">
+            <Comment.Author className="comment-author" as={Link} to={`/profile/${comment.username}`}>{comment.displayName}</Comment.Author>
+            <Comment.Metadata className="comment-date">
               <div>{formatDistance(comment.createdAt, new Date())}</div>
             </Comment.Metadata>
-            <Comment.Text>{comment.body}</Comment.Text>
+            <Comment.Text className="comment-text">{comment.body}</Comment.Text>
           </Comment.Content>
         </Comment>
           ))}
@@ -59,12 +58,11 @@ const AnnouncementDetailedChat = () => {
                 rows={2}
                 placeholder='Add your comment'
               />
-              <Button
+              <Button className="send-btn"
                 loading={submitting}
                 content='Add Reply'
                 labelPosition='left'
                 icon='edit'
-                primary
               />
             </Form>
             )}

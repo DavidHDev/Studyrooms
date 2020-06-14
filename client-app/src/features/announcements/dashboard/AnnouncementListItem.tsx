@@ -17,27 +17,25 @@ const AnnouncementListItem: React.FC<{ announcement: IAnnouncement }> = ({
             <Item.Image
               size="tiny"
               circular
-              src={host.image || "/assets/user.png"}
-              style={{ marginBottom: "3px" }}
+              src={host.image || "/assets/user.svg"}
+              style={{ marginBottom: "15px" }}
             ></Item.Image>
             <Item.Content>
-              <Item.Header as={Link} to={`/announcements/${announcement.id}`}>
+              <Item.Header className="item-title" as={Link} to={`/announcements/${announcement.id}`}>
                 {announcement.title}
               </Item.Header>
-              <Item.Description>
+              <Item.Description className="created-by">
                 Created by
                 <Link to={`/profile/${host.username}`}> {host.displayName}</Link>
               </Item.Description>
               {announcement.isHost && (
                 <Item.Description>
-                  <Label basic color="orange" content="You are hosting this." />
+                  <Label className="host-label" content="You are hosting this." />
                 </Item.Description>
               )}
               {announcement.isGoing && !announcement.isHost && (
                 <Item.Description>
-                  <Label
-                    basic
-                    color="green"
+                  <Label className="interested-label"
                     content="You are interested in this."
                   />
                 </Item.Description>
@@ -46,20 +44,23 @@ const AnnouncementListItem: React.FC<{ announcement: IAnnouncement }> = ({
           </Item>
         </Item.Group>
       </Segment>
-      <Segment>
+      <Segment className="time-location">
         <Icon name="clock" /> {format(announcement.date, "h:mm a")}
-        <Icon name="marker" /> {announcement.location}, {announcement.room}
+        &nbsp;<Icon name="marker"/>{announcement.location}, {announcement.room}
       </Segment>
+      <hr></hr>
       <Segment secondary>
+        <p className="interested">Interested Users</p>
         <AnnouncementListItemAttendees attendees={announcement.attendees} />
       </Segment>
+      <hr></hr>
       <Segment clearing>
         <span>{announcement.description}</span>
         <Button
           as={Link}
           to={`/announcements/${announcement.id}`}
           floated="right"
-          content="View"
+          content="View Details"
           color="blue"
         />
       </Segment>

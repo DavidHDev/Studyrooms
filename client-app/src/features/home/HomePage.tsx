@@ -6,6 +6,7 @@ import LoginForm from '../user/LoginForm';
 import RegisterForm from '../user/RegisterForm';
 
 const HomePage = () => {
+  const token = window.localStorage.getItem('jwt');
   const rootStore = useContext(RootStoreContext);
   const {isLoggedIn, user} = rootStore.userStore;
   const { openModal } = rootStore.modalStore;
@@ -15,7 +16,7 @@ const HomePage = () => {
                 <Header as='h1' inverted>
                     <Image className="homelogo" size='massive' src='/assets/SRWhite.png' alt='logo' style={{marginBottom: 12}}/>
                 </Header>
-                {isLoggedIn && user ? (
+                {isLoggedIn && user && token ? (
                 <Fragment>
                     <Header as='h2' inverted content={`Welcome back, ${user.displayName}`} />
                     <Button className="homebutton" as={Link} to='/announcements' size='huge' inverted>
@@ -24,12 +25,14 @@ const HomePage = () => {
                 </Fragment>
                 ) : (
                   <Fragment>
+                  <div className="auth-buttons">
                   <Button onClick={() => openModal(<LoginForm/>)} className="homebutton" size='huge' inverted>
                   Log In
                   </Button>
                   <Button onClick={() => openModal(<RegisterForm/>)} className="homebutton" size='huge' inverted>
                   Register
                   </Button>
+                  </div>
                   </Fragment>
                 )}
             </Container>

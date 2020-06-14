@@ -36,13 +36,13 @@ const AnnouncementDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     
 
   return (
-    <Grid>
-      <Grid.Column width={10}>
+    <Grid className="details-grid">
+      <Grid.Column className="head-info-chat" width={10}>
         <AnnouncementDetailedHeader announcement = {announcement} />
         <AnnouncementDetailedInfo announcement = {announcement}/>
         <AnnouncementDetailedChat />
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column className="sidebar" width={6}>
         <AnnouncementDetailedSidebar attendees={announcement.attendees} />
       </Grid.Column>
     </Grid>

@@ -10,7 +10,7 @@ const NavBar: React.FC = () => {
   return (
     <Menu fixed="top" inverted>
       <Container className="navflex">
-        <div>
+        <div  className="nav-grp">
         <Menu.Item className="logo" header as={NavLink} exact to="/">
           <img
             width="200px"
@@ -19,10 +19,11 @@ const NavBar: React.FC = () => {
             style={{ marginRight: 10 }}
           />
         </Menu.Item>
-        <Menu.Item name="Announcements" as={NavLink} to="/announcements" />
+        <Menu.Item className="nav-announcements" name="Announcements" as={NavLink} to="/announcements" />
         </div>
-        <Menu.Item>
-          <Button
+        <div className="nav-grp">
+        <Menu.Item className="nav-item">
+          <Button className="create-announ"
             as={NavLink}
             to="/createAnnouncement"
             positive
@@ -30,8 +31,8 @@ const NavBar: React.FC = () => {
           />
         </Menu.Item>
         {user && 
-                  <Menu.Item position='right'>
-                    <Image avatar spaced='right' src={user.image || '/assets/user.png'} />
+                  <Menu.Item className="nav-item" position='right'>
+                    <Image avatar spaced='right' src={user.image || '/assets/user.svg'} />
                     <Dropdown pointing='top left' text={user.displayName}>
                       <Dropdown.Menu>
                         <Dropdown.Item as={Link} to={`/profile/${user.username}`} text='My profile' icon='user'/>
@@ -40,6 +41,7 @@ const NavBar: React.FC = () => {
                     </Dropdown>
                   </Menu.Item>
         }
+        </div>
       </Container>
     </Menu>
   );

@@ -15,14 +15,14 @@ interface IProps {
 const ProfileHeader: React.FC<IProps> = ({profile, isCurrentUser, loading, follow, unfollow}) => {
   return (
     <Segment>
-      <Grid>
+      <Grid className="following-grid">
         <Grid.Column width={12}>
           <Item.Group>
             <Item>
               <Item.Image
                 avatar
                 size='small'
-                src={profile.image || '/assets/user.png'}
+                src={profile.image || '/assets/user.svg'}
               />
               <Item.Content verticalAlign='middle'>
                 <Header as='h1'>{profile.displayName}</Header>
@@ -31,22 +31,21 @@ const ProfileHeader: React.FC<IProps> = ({profile, isCurrentUser, loading, follo
           </Item.Group>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Statistic.Group widths={2}>
-            <Statistic label='Followers' value={profile.followersCount}/>
-            <Statistic label='Following' value={profile.followingCount}/>
+          <Statistic.Group className="flw-stats" widths={2}>
+            <Statistic className="stats" label='Followers' value={profile.followersCount}/>
+            <Statistic className="stats" label='Following' value={profile.followingCount}/>
           </Statistic.Group>
           <Divider/>
           {!isCurrentUser &&
           <Reveal animated='move'>
             <Reveal.Content visible style={{ width: '100%' }}>
-              <Button
+              <Button className="flw-btn"
                 fluid
-                color='teal'
                 content={profile.following ? 'Following' : 'Not Following'}
               />
             </Reveal.Content>
             <Reveal.Content hidden>
-              <Button
+              <Button className="btn-flw-hidden"
                 loading={loading}
                 fluid
                 basic

@@ -7,8 +7,8 @@ import { format } from 'date-fns';
 import { RootStoreContext } from '../../app/stores/rootStore';
 
 const panes = [
-  { menuItem: 'Future Events', pane: { key: 'futureEvents' } },
-  { menuItem: 'Past Events', pane: { key: 'pastEvents' } },
+  { menuItem: 'Upcoming', pane: { key: 'futureEvents' } },
+  { menuItem: 'Past Announcements', pane: { key: 'pastEvents' } },
   { menuItem: 'Hosting', pane: { key: 'hosted' } }
 ];
 
@@ -57,9 +57,9 @@ const ProfileEvents = () => {
             onTabChange={(e, data) => handleTabChange(e, data)}
           />
           <br />
-          <Card.Group itemsPerRow={4}>
+          <Card.Group itemsPerRow={2}>
             {userAnnouncements.map((announcement: IUserAnnouncement) => (
-              <Card
+              <Card className="ann-profile-card"
                 as={Link}
                 to={`/announcements/${announcement.id}`}
                 key={announcement.id}

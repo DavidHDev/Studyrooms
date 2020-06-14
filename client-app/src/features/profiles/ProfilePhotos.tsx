@@ -46,14 +46,14 @@ const ProfilePhotos = () => {
               loading={uploadingPhoto}
             />
           ) : (
-            <Card.Group itemsPerRow={5}>
+            <Card.Group itemsPerRow={2}>
               {profile &&
                 profile.photos.map(photo => (
-                  <Card key={photo.id}>
+                  <Card className="profile-photo" key={photo.id}>
                     <Image src={photo.url} />
                     {isCurrentUser && (
                       <Button.Group fluid widths={2}>
-                        <Button
+                        <Button className="photo-btn"
                           onClick={e => {
                             setMainPhoto(photo);
                             setTarget(e.currentTarget.name);
@@ -65,7 +65,7 @@ const ProfilePhotos = () => {
                           positive
                           content='Main'
                         />
-                        <Button
+                        <Button className="photo-btn"
                           name={photo.id}
                           disabled={photo.isMain}
                           onClick={(e) => {

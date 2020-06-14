@@ -79,8 +79,9 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
   };
 
   return (
-    <Grid>
-      <Grid.Column width={10}>
+    <Grid className="form-grid">
+      <Grid.Column width={12}>
+        <h2 className="form-title">Create Announcement</h2>
         <Segment className="create-form" clearing>
           <FinalForm
             validate={validate}
@@ -88,12 +89,14 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
             onSubmit={handleFinalFormSubmit}
             render={({ handleSubmit, invalid, pristine }) => (
               <Form onSubmit={handleSubmit} loading={loading}>
+                <p className="form-label">Announcement Title</p>
                 <Field
                   name="title"
                   placeholder="Title"
                   value={announcement.title}
                   component={TextInput}
                 />
+                <p className="form-label">Announcement Description</p>
                 <Field
                   id="form-textarea"
                   name="description"
@@ -102,6 +105,7 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
                   value={announcement.description}
                   component={TextAreaInput}
                 />
+                <p className="form-label">Pick a category</p>
                 <Field
                   name="category"
                   placeholder="Category"
@@ -109,7 +113,7 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
                   component={SelectInput}
                   options={category}
                 />
-
+                <p className="form-label">Announcement Date & Time</p>
                 <Form.Group widths="equal">
                   <Field
                     name="date"
@@ -126,16 +130,17 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
                     component={DateInput}
                   />
                 </Form.Group>
-
+                <p className="form-label">Location</p>
                 <Field
                   name="location"
                   placeholder="Location"
                   value={announcement.location}
                   component={TextInput}
                 />
+                <p className="form-label">Room or Link</p>
                 <Field
                   name="room"
-                  placeholder="Room"
+                  placeholder="Room/Link"
                   value={announcement.room}
                   component={TextInput}
                 />
@@ -155,6 +160,7 @@ const AnnouncementForm: React.FC<RouteComponentProps<DetailParams>> = ({
                   }
                   disabled={loading}
                   floated="right"
+                  className="cancel-create"
                   type="button"
                   content="Cancel"
                 />

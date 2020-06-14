@@ -24,7 +24,7 @@ const ProfilePage: React.FC<IProps> = ({match}) => {
     if (loadingProfile) return <LoadingComponent content='Loading profile...' />
 
     return (
-        <Grid>
+        <Grid className="profile-resize">
             <Grid.Column width={16}>
                 <ProfileHeader profile={profile!} isCurrentUser={isCurrentUser} loading={loading} follow={follow} unfollow={unfollow} />
                 <ProfileContent setActiveTab={setActiveTab}/>

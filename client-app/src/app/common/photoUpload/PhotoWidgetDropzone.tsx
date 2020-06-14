@@ -8,12 +8,17 @@ interface IProps {
 }
 
 const dropzoneStyles = {
-    border: "dashed 3px",
+    marginTop: '20px',
+    border: "dashed 2px",
+    display: 'flex',
+    flexDirection: 'column' as 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderColor: '#eee',
     borderRadius: '10px',
-    paddingTop: '30px',
     textAlign: 'center' as 'center',
-    height: '200px'
+    height: '200px',
+    width: '200px'
 }
 
 const dropzoneActive = {
@@ -33,7 +38,7 @@ const PhotoWidgetDropzone: React.FC<IProps> = ({setFiles}) => {
   return (
     <div {...getRootProps()} style={isDragActive ? {...dropzoneStyles, ...dropzoneActive} : dropzoneStyles}>
       <input {...getInputProps()} />
-      <Icon name='upload' size='huge'/>
+      <Icon name='upload' size='big'/>
       <Header content="Drag & Drop"></Header>
     </div>
   )

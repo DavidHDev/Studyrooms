@@ -21,7 +21,7 @@ const AnnouncementDetailedSidebar: React.FC<IProps> = ({attendees}) => {
                     inverted
                     color='teal'
                   >
-                    {attendees.length} {attendees.length === 1 ? 'Person' : 'People'} going
+                    {attendees.length} {attendees.length === 1 ? 'Person' : 'People'} Interested
                   </Segment>
                   <Segment attached>
                     <List relaxed divided>
@@ -36,13 +36,13 @@ const AnnouncementDetailedSidebar: React.FC<IProps> = ({attendees}) => {
                         Host
                       </Label>
                     }
-                      <Image size='tiny' src={attendee.image || '/assets/user.png'} />
+                      <Image size='tiny' src={attendee.image || '/assets/user.svg'} />
                       <Item.Content verticalAlign='middle'>
                         <Item.Header as='h3'>
                         <Link to={`/profile/${attendee.username}`}>{attendee.displayName}</Link>
                         </Item.Header>
                         {attendee.following &&
-                        <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra> }
+                        <Item.Extra style={{ color: '#2E73DC' }}>Following</Item.Extra> }
                       </Item.Content>
                     </Item>
                     ))}

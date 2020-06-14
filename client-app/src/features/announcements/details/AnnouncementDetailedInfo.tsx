@@ -17,6 +17,7 @@ const AnnouncementDetailedInfo: React.FC<{announcement: IAnnouncement}> = ({anno
                       </Grid.Column>
                     </Grid>
                   </Segment>
+                  <hr></hr>
                   <Segment attached>
                     <Grid verticalAlign='middle'>
                       <Grid.Column width={1}>
@@ -29,6 +30,7 @@ const AnnouncementDetailedInfo: React.FC<{announcement: IAnnouncement}> = ({anno
                       </Grid.Column>
                     </Grid>
                   </Segment>
+                  <hr></hr>
                   <Segment attached>
                     <Grid verticalAlign='middle'>
                       <Grid.Column width={1}>

@@ -9,8 +9,8 @@ import { combineValidators, isRequired } from 'revalidate';
 import ErrorMessage from '../../app/common/form/ErrorMessage';
 
 const validate = combineValidators({
-    email: isRequired('email'),
-    password: isRequired('password')
+    email: isRequired('E-mail'),
+    password: isRequired('Password')
 })
 
 const LoginForm = () => {
@@ -23,14 +23,16 @@ const LoginForm = () => {
             }))}
             validate={validate}
             render={({handleSubmit, submitting, form, submitError, invalid, pristine, dirtySinceLastSubmit}) => (
-                <Form onSubmit={handleSubmit} error>
-                    <Header as="h2" content="Login" color="blue" textAlign="center" />
-                    <Field 
+                <Form className="login-form" onSubmit={handleSubmit} error>
+                    <Header as="h2" content="Log In" color="blue" textAlign="center" />
+                    <p className="input-label">E-Mail Address</p>
+                    <Field className="basic-input"
                         name="email"
                         component={TextInput}
                         placeholder="Email"
                     />
-                    <Field 
+                    <p className="input-label">Password</p>
+                    <Field className="basic-input"
                         name="password"
                         component={TextInput}
                         placeholder="Password"
@@ -39,7 +41,8 @@ const LoginForm = () => {
                     {submitError && !dirtySinceLastSubmit && (
                         <ErrorMessage error={submitError} text='Invalid email or password.'/>
                     )}
-                    <Button fluid disabled={invalid && !dirtySinceLastSubmit || pristine} loading={submitting} positive content="Login" />
+                    <Button className="login-btn" fluid disabled={invalid && !dirtySinceLastSubmit || pristine} loading={submitting} positive content="Login" />
+                    
                 </Form>
             )}
         

@@ -22,24 +22,24 @@ const PhotoUploadWidget: React.FC<IProps> = ({loading, uploadPhoto}) => {
 
     return(
         <Fragment>
-        <Grid>
+        <Grid className="photo-grid">
           <Grid.Column width={4}>
-            <Header color='teal' sub content='Step 1 - Add Photo' />
+            <Header sub content='Step 1 - Add Photo' />
             <PhotoWidgetDropzone setFiles={setFiles}/>
           </Grid.Column>
           <Grid.Column width={1} />
           <Grid.Column width={4}>
-            <Header sub color='teal' content='Step 2 - Resize image' />
+            <Header sub content='Step 2 - Resize image' />
             {files.length > 0 &&
             <PhotoWidgetCropper setImage={setImage} imagePreview={files[0].preview}/> }
           </Grid.Column>
           <Grid.Column width={1} />
           <Grid.Column width={4}>
-            <Header sub color='teal' content='Step 3 - Preview & Upload' />
+            <Header sub content='Step 3 - Preview & Upload' />
             {files.length > 0 && 
             <Fragment>
-              <div className='img-preview' style={{minHeight: '200px', overflow: 'hidden'}}></div>
-              <Button.Group widths={2}>
+              <div className='img-preview' style={{minHeight: '200px', marginTop: '20px', minWidth: '200px', overflow: 'hidden'}}></div>
+              <Button.Group className="photo-upload-btn" widths={2}>
                 <Button positive icon='check' loading={loading} onClick={() => uploadPhoto(image!)}/>
                 <Button icon='close' disabled={loading} onClick={() => setFiles([])} />
               </Button.Group>

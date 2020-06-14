@@ -19,7 +19,7 @@ interface IProps {
 
 const ProfileContent: React.FC<IProps> = ({setActiveTab}) => {
     return (
-        <Tab 
+        <Tab className="tab-grid"
             menu={{fluid: true, vertical: true}}
             menuPosition='right'
             panes={panes}

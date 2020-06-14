@@ -9,8 +9,8 @@ const AnnouncementFilters = () => {
   const { predicate, setPredicate } = rootStore.announcementStore;
   return (
     <Fragment>
-      <Menu vertical size={'large'} style={{ width: '100%', marginTop: 50 }}>
-        <Header icon={'filter'} attached color={'teal'} content={'Filters'} />
+      <Menu className="filter-menu" vertical size={'large'} style={{ width: '100%', marginTop: 155 }}>
+        <Header icon={'filter'} attached content={'Filters'} />
         <Menu.Item
           active={predicate.size === 0}
           onClick={() => setPredicate('all', 'true')}
@@ -36,7 +36,6 @@ const AnnouncementFilters = () => {
       <Header
         icon={'calendar'}
         attached
-        color={'teal'}
         content={'Select Date'}
       />
       <Calendar
