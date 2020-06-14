@@ -38,7 +38,7 @@ namespace API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                    .UseKestrel(x => x.AddServerHeader = false)
+                    .ConfigureKestrel(x => x.AddServerHeader = false)
                     .UseStartup<Startup>();
                 });
     }

@@ -1,30 +1,29 @@
+using System;
+using System.Text;
+using System.Threading.Tasks;
+using API.Middleware;
+using API.SignalR;
 using Application.Announcements;
+using Application.Interfaces;
+using Application.Profiles;
+using AutoMapper;
+using Domain;
+using FluentValidation.AspNetCore;
+using Infrastructure.Photos;
+using Infrastructure.Security;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Persistence;
-using FluentValidation.AspNetCore;
-using API.Middleware;
-using Domain;
-using Microsoft.AspNetCore.Identity;
-using Application.Interfaces;
-using Infrastructure.Security;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using AutoMapper;
-using Infrastructure.Photos;
-using System.Threading.Tasks;
-using API.SignalR;
-using Application.Profiles;
-using System;
-
+using Persistence;
 namespace API
 {
     public class Startup
@@ -36,10 +35,33 @@ namespace API
 
         public IConfiguration Configuration { get; }
 
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(opt =>
+            {
+                opt.UseLazyLoadingProxies();
+                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            services.AddDbContext<DataContext>(opt =>
+            {
+                opt.UseLazyLoadingProxies();
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            ConfigureServices(services);
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(opt => {
+            services.AddDbContext<DataContext>(opt =>
+            {
                 opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });

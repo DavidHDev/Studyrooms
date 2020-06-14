@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
     public class Announcement
     {
+        [MaxLength(255)]
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
