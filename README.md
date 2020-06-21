@@ -2,15 +2,15 @@
 ![Logo](/client-app/public/assets/SRBlack.png)
 
 ## General Information
-Avand ca scop atingerea unei anume complexitati in varianta finala a aplicatiei, am decis ca si "best practices", ca aceasta sa fie multi-layered si impartita in 4 sub-proiecte + aplicatia Client-Side. Asta ne asigura un "separation of concerns" mai clar, deci schimbarea unuia dintre straturi nu ar trebui sa cauzeze un impact arhitectural semnificativ in celelalte straturi.
+Avand ca scop atingerea unei anume complexitati in varianta finala a aplicatiei, am decis ca si "best practices", ca aceasta sa fie multi-layered si impartita in 5 sub-proiecte + aplicatia Client-Side. Asta ne asigura un "separation of concerns" mai clar, deci schimbarea unuia dintre straturi nu ar trebui sa cauzeze un impact arhitectural semnificativ in celelalte straturi.
 
-Asadar, avem 5 componente principale care alcatuiesc aplicatia: API, Application, Domain, Persistence, Client-App.
+Asadar, avem 6 componente principale care alcatuiesc aplicatia: API, Application, Domain, Persistence, Client-App.
 
 ## Technologies
 ![Logo](/client-app/public/assets/techstack.png)
 Prima versiune
 
--> Baza proiectului este construita cu ASP.NET Core, Entity Framework Core ca si Object Relational Mapper si SQLite pentru baza de date(urmeaza sa schimb pe viitor in MySQL). Aplicatia se foloseste de MVC pentru definirea si crearea de controllere.
+-> Baza proiectului este construita cu ASP.NET Core, Entity Framework Core ca si Object Relational Mapper si SQLite pentru baza de date(SQL Server pentru versiunea publicată pe Azure). Aplicatia se foloseste de MVC pentru definirea si crearea de controllere.
 
 -> Pentru Front-End(Client Side) am folosit React.js impreuna cu Typescript iar ca si CSS framework am ales Semantic UI React, componentele fiind customizate conform designului pe care l-am creat. 
 
@@ -26,6 +26,7 @@ Apoi, intram in folderul **client-app** si pornim serverul de development al apl
 1. Putem deschide doua ferestre Command Prompt(cmd) si sa rulam ambele componentele prin CLI.
 
 *Pentru API*
+-> `dotnet restore` (la nivelul solutiei)
 
 -> `cd Studyrooms/API/`
 
@@ -34,6 +35,8 @@ Apoi, intram in folderul **client-app** si pornim serverul de development al apl
 *Pentru Aplicatia Client*
 
 -> `cd Studyrooms/client-app/`
+
+-> `npm install`
 
 -> `npm start`
 
@@ -47,7 +50,4 @@ Rulam API-ul din interfata grafica.
 
 *Pentru Aplicatia Client*
 
-Rulam comenzile `cd Studyrooms/client-app/` si apoi `npm start` in CMD pentru a porni serverul de development.
-
-## Features
-1.0 - Deocamdata am implementat doar logica, arhitectura de baza a aplicatiei (un "walking-skeleton") si functionalitatile CRUD pentru Front-End si Back-End dar si putina stilizare de baza.
+Rulam comenzile `cd Studyrooms/client-app/` si apoi `npm install` si `npm start` in CMD pentru a porni serverul de development.
