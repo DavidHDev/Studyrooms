@@ -4,7 +4,7 @@
 ## General Information
 Avand ca scop atingerea unei anume complexitati in varianta finala a aplicatiei, am decis ca si "best practices", ca aceasta sa fie multi-layered si impartita in 5 sub-proiecte + aplicatia Client-Side. Asta ne asigura un "separation of concerns" mai clar, deci schimbarea unuia dintre straturi nu ar trebui sa cauzeze un impact arhitectural semnificativ in celelalte straturi.
 
-Asadar, avem 6 componente principale care alcatuiesc aplicatia: API, Application, Domain, Persistence, Client-App.
+Asadar, avem 6 componente principale care alcatuiesc aplicatia: API, Application, Infrastructure, Domain, Persistence, Client-App.
 
 ## Technologies
 ![Logo](/client-app/public/assets/techstack.png)
